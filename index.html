@@ -59,7 +59,7 @@ h2 {
 
 .header-text {
   /* ✅ 2. ขยับข้อความขึ้นไป */
-  margin-top: 20px; 
+  margin-top: 10px; 
   text-align: left;
   font-size: 14px;
   font-weight: bold;
@@ -97,10 +97,8 @@ h2 {
 }
 .right-sidebar {
   display: flex;
-  flex-direction: column;    /* วางสองภาพเป็นคอลัมน์ (แบบปัจจุบัน) */
-  align-items: center;       /* จัดให้ทั้ง 2 รูปอยู่กึ่งกลาง */
-  gap: 12px;
-  margin-top: 20px;
+  justify-content: center;   /* แทน space-between */
+  gap: 15px;                 /* ระยะห่างระหว่างรูป */
 }
 .method-img {
   padding: 10px;
@@ -458,6 +456,7 @@ function generateReport() {
   </script>
 </body>
 </html>
+
 
 
 
