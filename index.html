@@ -31,7 +31,7 @@ h2 {
   color: #000;
   padding: 10px;
   border-radius: 8px;
-  /* ✅ 3. ลดระยะห่างด้านบนของหัวข้อลงเหลือ 0 */
+  /* ลดระยะห่างด้านบนของหัวข้อ */
   margin-top: 0px;
 }
 
@@ -39,11 +39,9 @@ h2 {
 .header-group {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* ชิดบน */
-  /* ✅ 1. ลดระยะห่างระหว่างโลโก้และข้อความ (ให้ชิดกันมากขึ้น) */
+  align-items: flex-start; 
   gap: 4px;
   margin-top: -30px;
-  /* ✅ 3. ดึงส่วนหัวข้อ (h2) ให้ขยับขึ้นมาใกล้อีก */
   margin-bottom: -20px;
 }
 
@@ -58,34 +56,29 @@ h2 {
 }
 
 .header-text {
-  /* ✅ 2. ขยับข้อความขึ้นไป */
   margin-top: 20px; 
   text-align: left;
   font-size: 14px;
   font-weight: bold;
   color: #4a148c;
   line-height: 1.3;
-  
-  /* 🔧 แก้ไขตรงนี้ครับ: ขยายความกว้างจาก 420px เป็น 550px */
   max-width: 550px; 
-  
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
-  /* ป้องกันการตัดคำมั่วซั่ว */
   white-space: nowrap; 
 }
 
-/* ถ้าหน้าจอเล็ก ให้ยอมขึ้นบรรทัดใหม่ได้ */
 @media (max-width: 600px) {
   .header-text {
     white-space: normal;
   }
 }
 
-/* --- 3. ส่วนเนื้อหาหลัก --- */
+/* --- 3. ส่วนเนื้อหาหลัก (2 คอลัมน์) --- */
 .main-content {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  /* ✅ จัดการให้คอลัมน์ขวา (รูป) ชิดล่างของคอลัมน์ซ้าย (สถานี) */
+  align-items: stretch; 
   margin-top: 10px;
   gap: 15px;
 }
@@ -98,8 +91,9 @@ h2 {
 
 .right-sidebar {
   width: 43%; 
-  display: flex; 
-  justify-content: space-between;
+  display: flex;
+  flex-direction: column; /* สั่งให้ content เรียงลงมาตามแนวตั้ง */
+  justify-content: flex-end; /* ✅ สั่งให้เนื้อหาทั้งหมดชิดล่างสุด */
   gap: 8px;
 }
 
@@ -245,7 +239,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
   .header-text {
     text-align: center;
     margin-top: 10px;
-    white-space: normal; /* มือถือให้ขึ้นบรรทัดใหม่ได้ */
+    white-space: normal; 
   }
   
   .main-content, .right-sidebar {
@@ -263,7 +257,20 @@ button:last-of-type { background: #4caf50; color: #fff; }
   <div class="form-section">
     <h2>กรอกข้อมูลสถานการณ์ฝุ่น PM2.5</h2>
     
-    <label>พื้นที่: <input id="area" type="text" placeholder="ระบุชื่อพื้นที่"></label><br><br>
+    <label>พื้นที่: 
+        <select id="areaSelector" onchange="toggleAreaInput()">
+            <option value="">-- เลือกพื้นที่ --</option>
+            <option value="เขตเทศบาลนครมาบตาพุด">เขตเทศบาลนครมาบตาพุด</option>
+            <option value="manual">ระบุเอง</option>
+        </select>
+    </label><br><br>
+    
+    <div id="manualAreaContainer" style="display:none; margin-top: 5px;">
+        <label>ระบุพื้นที่อื่น: <input id="manualAreaInput" type="text" placeholder="พิมพ์ชื่อพื้นที่"></label>
+    </div>
+
+    <br> 
+
     <label>วันที่: <input id="date" type="date"></label><br><br>
     <label>เวลา: 
       ชั่วโมง <input id="hour" type="number" min="0" max="23" style="width:60px"> 
@@ -288,8 +295,8 @@ button:last-of-type { background: #4caf50; color: #fff; }
       <div class="header-text">
         งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม<br>
         กลุ่มงานอาชีวเวชกรรม<br>
-        โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี ระยอง<br>
-        โทร 038-684444 ต่อ 3106 เบอร์มือถือ 081-7810248
+        โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ<br>
+        สยามบรมราชกุมารี ระยอง
       </div>
     </div>
 
@@ -303,13 +310,14 @@ button:last-of-type { background: #4caf50; color: #fff; }
       
       <div id="stations" class="stations"></div>
 
- <div class="right-sidebar">
-  <img src="assets/5medthod.png" alt="5 วิธีป้องกัน" style="margin-top: 310px;">
-  <img src="assets/8medthod.png" alt="8 วิธีดูแลตนเอง" style="margin-top: 235px;">
-</div>
+      <div class="right-sidebar">
+        <img src="assets/5medthod.png" alt="5 วิธีป้องกัน" style="margin-top: 310px;"> 
+        <img src="assets/8medthod.png" alt="8 วิธีดูแลตนเอง" style="margin-top: 235px;">
+      </div>
+
     </div>
 
-    <img src="assets/advice_table.jpg" alt="ตารางคำแนะนำ" class="advice-img">
+    <img src="assets/591104.jpg" alt="ตารางคำแนะนำ" class="advice-img">
 
     <h3>ค่ามาตรฐานฝุ่นละออง PM2.5 (µg/m³)</h3>
     <div class="arrow-scale-svg">
@@ -349,6 +357,19 @@ button:last-of-type { background: #4caf50; color: #fff; }
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
+    // ฟังก์ชันสำหรับสลับช่องกรอกพื้นที่
+    function toggleAreaInput() {
+        const selector = document.getElementById("areaSelector");
+        const container = document.getElementById("manualAreaContainer");
+        
+        if (selector.value === "manual") {
+            container.style.display = "block";
+        } else {
+            container.style.display = "none";
+            document.getElementById("manualAreaInput").value = ""; 
+        }
+    }
+
     function getLevel(pm) {
       if (pm <= 25) return {text:"ดีมาก 😊", class:"good"};
       if (pm <= 37.5) return {text:"ดี 😐", class:"moderate"};
@@ -358,7 +379,12 @@ button:last-of-type { background: #4caf50; color: #fff; }
     }
 
     function generateReport() {
-      document.getElementById("areaValue").innerText = "พื้นที่: " + document.getElementById("area").value;
+      // ✅ แก้ไข: ดึงค่าจาก Dropdown หรือช่องระบุเอง
+      let areaValue = document.getElementById("areaSelector").value;
+      if (areaValue === "manual") {
+          areaValue = document.getElementById("manualAreaInput").value;
+      }
+      document.getElementById("areaValue").innerText = "พื้นที่: " + areaValue;
 
       const dateInput = document.getElementById("date").value;
       if (dateInput) {
@@ -424,12 +450,3 @@ button:last-of-type { background: #4caf50; color: #fff; }
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
