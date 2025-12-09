@@ -32,38 +32,17 @@ h2 {
   margin-top: 5px;
 }
 
-/* --- 2. ส่วนหัวกระดาษ (Logo HRH + Logo OCC + ข้อความ) --- */
-.header-group {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 10px;            /* เพิ่มระยะห่างระหว่างโลโก้ให้ไม่อึดอัด */
-  margin-top: -30px;
-  margin-bottom: -10px;
+/* --- 2. ส่วนหัวกระดาษ (รูปภาพ Banner) --- */
+.banner-header {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: -20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
 }
 
-/* 🔧 ปรับขนาดโลโก้แยกกันตรงนี้ครับ */
-.logo-hrh {
-  height: 90px;         /* โลโก้ซ้าย (HRH) ปรับเลขนี้ถ้ายังใหญ่ไป */
-  width: auto;
-}
-
-.logo-occ {
-  height: 135px;         /* โลโก้กลาง (OCC) ปรับเลขนี้ให้ใหญ่ขึ้นนิดนึง */
-  width: auto;
-}
-
-.header-text {
-  align-self: center;
-  text-align: left;
-  font-size: 12px;
-  font-weight: bold;
-  color: #4a148c;
-  line-height: 1.3;
-  max-width: 380px;     /* ขยายพื้นที่ข้อความอีกนิด */
-}
-
-/* --- 3. ส่วนเนื้อหาหลัก --- */
+/* --- 3. ส่วนเนื้อหาหลัก (แบ่งซ้าย-ขวา) --- */
 .main-content {
   display: flex;
   justify-content: space-between;
@@ -165,42 +144,15 @@ h2 {
   display: inline-block;
 }
 
-/* --- 6. ตารางคำแนะนำ --- */
-.advice-box {
-  margin-top: 10px;
-  padding: 15px;
-  border-radius: 10px;
-  background: #ba68c8;
-  font-size: 16px;
-  font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  clear: both;
+/* --- 6. รูปภาพคำแนะนำ (มาแทนตารางเดิม) --- */
+.advice-img {
+  width: 100%;          /* กว้างเต็มจอ */
+  height: auto;
+  margin-top: 15px;     /* เว้นระยะห่างด้านบน */
+  border-radius: 10px;  /* มุมมน */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* เงา */
+  display: block;
 }
-
-.advice-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 5px;
-  font-size: 14px;
-  background: #ba68c8;
-}
-.advice-table th, .advice-table td {
-  border: 2px solid #aaa;
-  padding: 6px;
-  text-align: center;
-}
-.advice-table th {
-  background: #455a64;
-  font-weight: bold;
-  text-align: center;
-  color: #fff;
-}
-
-.advice-good { background:#2196f3; color:#000; }
-.advice-moderate { background:#4caf50; color:#000; }
-.advice-unhealthy { background:#ffeb3b; color:#000; }
-.advice-very-unhealthy { background:#ff9800; color:#000; }
-.advice-hazardous { background:#f44336; color:#000; }
 
 /* --- 7. ส่วนกระดาษ A4 --- */
 .a4 {
@@ -241,13 +193,6 @@ button:last-of-type { background: #4caf50; color: #fff; }
   .station { font-size: 14px; }
   h2 { font-size: 18px; }
   
-  .header-group {
-    flex-direction: column;
-    text-align: center;
-  }
-  .header-text {
-    text-align: center;
-  }
   .main-content, .right-sidebar {
     flex-direction: column; 
   }
@@ -282,16 +227,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
 
   <div id="report" class="infographic a4" style="display:none;">
     
-    <div class="header-group">
-      <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-hrh">
-      
-      <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-occ">
-      
-      <div class="header-text">
-        งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม กลุ่มงานอาชีวเวชกรรม<br>
-        โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี ระยอง
-      </div>
-    </div>
+    <img src="assets/header_banner.png" alt="หัวกระดาษ" class="banner-header">
 
     <h2>รายงานสถานการณ์ PM2.5</h2>
     
@@ -310,7 +246,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
 
     </div>
 
-    <div class="advice-box" id="adviceValue"></div>
+    <img src="assets/advice_table.jpg" alt="ตารางคำแนะนำ" class="advice-img">
 
     <h3>ค่ามาตรฐานฝุ่นละออง PM2.5 (µg/m³)</h3>
     <div class="arrow-scale-svg">
@@ -410,41 +346,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
 
       document.getElementById("stations").innerHTML = stationsHTML;
 
-      document.getElementById("adviceValue").innerHTML = `
-      😷 <strong>คำแนะนำการปฏิบัติตัวสำหรับประชาชน</strong><br><br>
-      <table class="advice-table">
-        <tr>
-          <th>เกณฑ์คุณภาพอากาศ (µg/m³)</th>
-          <th>ประชาชนทั่วไป</th>
-          <th>กลุ่มเสี่ยง</th>
-        </tr>
-        <tr class="advice-good">
-          <td>0 - 15</td>
-          <td>ทำกิจกรรมได้ตามปกติ</td>
-          <td>ทำกิจกรรมได้ตามปกติ</td>
-        </tr>
-        <tr class="advice-moderate">
-          <td>15.1 - 25</td>
-          <td>ทำกิจกรรมได้ตามปกติ</td>
-          <td>เลี่ยงทำกิจกรรมกลางแจ้ง</td>
-        </tr>
-        <tr class="advice-unhealthy">
-          <td>25.1 - 37.5</td>
-          <td>เลี่ยงทำกิจกรรมกลางแจ้ง</td>
-          <td>ลดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
-        </tr>
-        <tr class="advice-very-unhealthy">
-          <td>37.6 - 75</td>
-          <td>ลดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
-          <td>จำกัดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
-        </tr>
-        <tr class="advice-hazardous">
-          <td>มากกว่า 75</td>
-          <td>จำกัดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
-          <td>งดทำกิจกรรมกลางแจ้ง, สวมหน้ากาก, อยู่ในห้องปลอดฝุ่น</td>
-        </tr>
-      </table>
-      `;
+      // ❌ ลบโค้ดสร้างตารางเดิมออก เพราะเราใส่รูปใน HTML แทนแล้ว
       
       document.getElementById("report").style.display = "block";
     }
@@ -461,7 +363,3 @@ button:last-of-type { background: #4caf50; color: #fff; }
   </script>
 </body>
 </html>
-
-
-
-
