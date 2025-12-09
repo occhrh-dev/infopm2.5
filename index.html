@@ -102,7 +102,14 @@ h2 {
   justify-content: space-between;
   gap: 8px;
 }
-
+.method-img {
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.85);   /* กล่องขาวโปร่งแสง */
+  backdrop-filter: blur(3px);              /* เบลอพื้นหลังหลังรูป */
+  border-radius: 12px;                     /* มุมโค้ง */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25); /* เงาให้เด่น */
+  border: 1px solid rgba(0,0,0,0.15);      /* กรอบบาง ๆ */
+}
 .right-sidebar img {
   width: 48%; 
   height: auto;
@@ -113,7 +120,6 @@ h2 {
   align-self: flex-start;
   border: 1px solid #ddd;
 }
-
 /* --- 4. สไตล์ของกล่องสถานี --- */
 .station {
   margin: 0 0 15px 0;
@@ -315,8 +321,8 @@ button:last-of-type { background: #4caf50; color: #fff; }
       <div id="stations" class="stations"></div>
 
  <div class="right-sidebar">
-  <img src="assets/5medthod.png" alt="5 วิธีป้องกัน" style="margin-top: 310px;">
-  <img src="assets/8medthod.png" alt="8 วิธีดูแลตนเอง" style="margin-top: 235px;">
+<img src="assets/5medthod.png" class="method-img" style="margin-top: 310px;">
+<img src="assets/8medthod.png" class="method-img" style="margin-top: 235px;">
 </div>
     </div>
 
@@ -449,3 +455,4 @@ function generateReport() {
   </script>
 </body>
 </html>
+
