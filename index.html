@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>รายงานสถานการณ์ PM2.5</title>
- <style>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* --- 1. ตั้งค่าพื้นฐาน --- */
 body {
-  font-family: sans-serif;
+  font-family: 'Sarabun', sans-serif;
   background: #f5f5f5;
   margin: 0;
   padding: 20px;
 }
 
+/* กล่องฟอร์มและกล่องรายงาน */
 .form-section, .infographic {
   background: #fff;
   padding: 15px;
@@ -21,26 +25,71 @@ body {
 
 .infographic { text-align: center; }
 
+/* หัวข้อรายงาน */
 h2 {
   background: linear-gradient(90deg, #4caf50, #ffeb3b, #ff9800, #f44336, #9c27b0);
   color: #000;
   padding: 10px;
   border-radius: 8px;
+  margin-top: 5px;
 }
 
+/* --- 2. ส่วน Logo ด้านบน (พื้นที่หมายเลข 1) --- */
+.header-logo {
+  text-align: center; /* จัดกึ่งกลาง */
+  margin-bottom: 10px;
+}
+.header-logo img {
+  height: 80px;      /* ปรับความสูงโลโก้ */
+  width: auto;
+}
+
+/* --- 3. ส่วนเนื้อหาหลัก (แบ่งซ้าย-ขวา) --- */
+.main-content {
+  display: flex;
+  justify-content: space-between; /* แยกซ้ายขวา */
+  align-items: flex-start;
+  margin-top: 10px;
+  gap: 15px;
+}
+
+/* ด้านซ้าย: ข้อมูลสถานี (พื้นที่สีเขียว) */
+.stations {
+  width: 55%; 
+  display: flex;
+  flex-direction: column;
+}
+
+/* ด้านขวา: พื้นที่ใส่รูปคำแนะนำ (พื้นที่หมายเลข 2 และ 3) */
+.right-sidebar {
+  width: 43%;       /* พื้นที่ด้านขวา */
+  display: flex;    /* สั่งให้รูปข้างในเรียงแนวนอน */
+  justify-content: space-between;
+  gap: 8px;         /* ระยะห่างระหว่างรูป */
+}
+
+/* สไตล์ของรูปเล็ก 2 รูปในด้านขวา */
+.right-sidebar img {
+  width: 48%;       /* ให้แต่ละรูปกว้างเกือบครึ่งนึง */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background: #fff;
+  object-fit: contain;
+  align-self: flex-start;
+  border: 1px solid #ddd;
+}
+
+/* --- 4. สไตล์ของกล่องสถานี (Station Cards) --- */
 .station {
-  margin: 10px 0;
-  padding: 8px;
+  margin: 0 0 15px 0; /* เว้นระยะห่างด้านล่าง */
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   color: #fff;
+  width: 100%; 
+  box-sizing: border-box;
 }
-
-.good { background: #2196f3; }
-.moderate { background: #4caf50; color: #000; }
-.unhealthy { background: #ffeb3b; color: #000; }
-.very-unhealthy { background: #ff9800; }
-.hazardous { background: #f44336; }
 
 .station-name {
   font-size: 20px;
@@ -49,76 +98,14 @@ h2 {
   margin-bottom: 5px;
 }
 
-.advice-box {
-  margin-top: 6px;
-  padding: 20px;
-  border-radius: 10px;
-  background: #ba68c8;
-  font-size: 16px;
-  font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-.stations {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* ✅ ชิดซ้าย */
-  width: 60%;              /* ✅ ลดความกว้างลง */
-}
-.advice-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 5px;
-  font-size: 14px;
-  background: #ba68c8;
-}
-.advice-table th, .advice-table td {
-  border: 2px solid #aaa;
-  padding: 8px;
-  text-align: center;
-}
-.advice-table th {
-  background: #455a64;
-  font-weight: bold;
-  text-align: center;
-}
+/* สีพื้นหลังตามค่า PM */
+.good { background: #2196f3; }
+.moderate { background: #4caf50; color: #000; }
+.unhealthy { background: #ffeb3b; color: #000; }
+.very-unhealthy { background: #ff9800; }
+.hazardous { background: #f44336; }
 
-.advice-good { background:#2196f3; color:#000; }
-.advice-moderate { background:#4caf50; color:#000; }
-.advice-unhealthy { background:#ffeb3b; color:#000; }
-.advice-very-unhealthy { background:#ff9800; color:#000; }
-.advice-hazardous { background:#f44336; color:#000; }
-
-.a4 {
-  width: 210mm;
-  min-height: 297mm;
-  background: #d1c4e9;
-  margin: 0;
-  padding: 10mm;
-  box-sizing: border-box;
-}
-
-#areaValue::before { content: "📍 "; font-size: 20px; }
-#dateValue::before { content: "📅 "; font-size: 20px; }
-#timeValue::before { content: "⏰ "; font-size: 20px; }
-
-#areaValue, #dateValue, #timeValue {
-  font-size: 16px;
-  font-weight: bold;
-  color: #4a148c;
-  background: #e1bee7;
-  padding: 4px 8px;
-  border-radius: 6px;
-  margin-bottom: 5px;
-  display: inline-block;
-}
-
-.emoji {
-  font-size: 32px;
-  line-height: 1.2;
-  margin: 6px 0;
-  text-align: center;
-}
-
+/* กล่องไฮไลท์ค่าตัวเลข */
 .pm-highlight {
   font-size: 26px;
   font-weight: bold;
@@ -141,218 +128,312 @@ h2 {
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-/* ลูกศร SVG */
+.emoji {
+  font-size: 32px;
+  line-height: 1.2;
+  margin: 6px 0;
+  text-align: center;
+}
+
+/* --- 5. ส่วนวันที่และเวลา --- */
+#areaValue::before { content: "📍 "; font-size: 20px; }
+#dateValue::before { content: "📅 "; font-size: 20px; }
+#timeValue::before { content: "⏰ "; font-size: 20px; }
+
+#areaValue, #dateValue, #timeValue {
+  font-size: 16px;
+  font-weight: bold;
+  color: #4a148c;
+  background: #e1bee7;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+/* --- 6. ตารางคำแนะนำ (Advice Table) --- */
+.advice-box {
+  margin-top: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #ba68c8;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  clear: both;
+}
+
+.advice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 5px;
+  font-size: 14px;
+  background: #ba68c8;
+}
+.advice-table th, .advice-table td {
+  border: 2px solid #aaa;
+  padding: 6px;
+  text-align: center;
+}
+.advice-table th {
+  background: #455a64;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+}
+
+/* สีพื้นหลังตารางคำแนะนำ */
+.advice-good { background:#2196f3; color:#000; }
+.advice-moderate { background:#4caf50; color:#000; }
+.advice-unhealthy { background:#ffeb3b; color:#000; }
+.advice-very-unhealthy { background:#ff9800; color:#000; }
+.advice-hazardous { background:#f44336; color:#000; }
+
+/* --- 7. ส่วนกระดาษ A4 --- */
+.a4 {
+  width: 210mm;
+  min-height: 297mm;
+  background: #d1c4e9;
+  margin: 0 auto;
+  padding: 10mm;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* ลูกศรเกณฑ์ด้านล่าง */
 .arrow-scale-svg {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
+  gap: 5px;
   margin-top: 10px;
 }
 .arrow-svg {
-  width: 130px;
+  width: 19%; /* ปรับขนาดให้เรียงกันสวยๆ */
+  min-width: 100px;
   height: auto;
 }
+
+/* ปุ่มกด */
 button {
   padding: 10px 15px;
   margin-top: 10px;
   cursor: pointer;
   border: none;
   border-radius: 6px;
+  font-size: 16px;
 }
 button:first-of-type { background: #2196f3; color: #fff; }
 button:last-of-type { background: #4caf50; color: #fff; }
 
+/* --- Responsive (มือถือ) --- */
 @media (max-width: 600px) {
   .station { font-size: 14px; }
   h2 { font-size: 18px; }
+  
+  /* ปรับให้ทุกอย่างเรียงแนวตั้งเมื่อจอเล็ก */
+  .main-content, .right-sidebar {
+    flex-direction: column;
+  }
+  .stations, .right-sidebar, .right-sidebar img {
+    width: 100%;
+  }
+  .right-sidebar { gap: 10px; margin-top: 15px; }
 }
 </style>
 </head>
 <body>
 
   <div class="form-section">
-  <h2>กรอกข้อมูลสถานการณ์ฝุ่น PM2.5</h2>
-  
-  <label>พื้นที่: <input id="area" type="text"></label><br><br>
-  <label>: <input id="date" type="date"></label><br><br>
-  <label>เวลา: 
-  ชั่วโมง <input id="hour" type="number" min="0" max="23" style="width:60px"> 
-  นาที <input id="minute" type="number" min="0" max="59" style="width:60px">
-</label>
+    <h2>กรอกข้อมูลสถานการณ์ฝุ่น PM2.5</h2>
+    
+    <label>พื้นที่: <input id="area" type="text" placeholder="ระบุชื่อพื้นที่"></label><br><br>
+    <label>วันที่: <input id="date" type="date"></label><br><br>
+    <label>เวลา: 
+      ชั่วโมง <input id="hour" type="number" min="0" max="23" style="width:60px"> 
+      นาที <input id="minute" type="number" min="0" max="59" style="width:60px">
+    </label>
 
-  <h3>สถานีศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง</h3>
-  <label>ค่า PM2.5: <input id="pm1" type="number"></label><br><br>
+    <h3>สถานีศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง</h3>
+    <label>ค่า PM2.5: <input id="pm1" type="number" placeholder="ใส่ค่าตัวเลข"></label><br><br>
 
-  <h3>สถานีศูนย์ราชการ ต.มาบตาพุด</h3>
-  <label>ค่า PM2.5: <input id="pm2" type="number"></label><br><br>
+    <h3>สถานีศูนย์ราชการ ต.มาบตาพุด</h3>
+    <label>ค่า PM2.5: <input id="pm2" type="number" placeholder="ใส่ค่าตัวเลข"></label><br><br>
 
-  <button onclick="generateReport()">สร้างรายงาน</button>
-  <button onclick="downloadImage()">📸 บันทึกเป็นภาพ</button>
-</div>
+    <button onclick="generateReport()">สร้างรายงาน</button>
+    <button onclick="downloadImage()">📸 บันทึกเป็นภาพ</button>
+  </div>
 
   <div id="report" class="infographic a4" style="display:none;">
+    
+    <div class="header-logo">
+      <img src="assets/logo.occ.png" alt="Logo หน่วยงาน">
+    </div>
+
     <h2>รายงานสถานการณ์ PM2.5</h2>
+    
     <div id="areaValue"></div>
     <div id="dateValue"></div>
     <div id="timeValue"></div>
 
-    <div id="stations" class="stations"></div>
+    <div class="main-content">
+      
+      <div id="stations" class="stations"></div>
+
+      <div class="right-sidebar">
+        <img src="assets/5medthod.png" alt="5 วิธีป้องกัน">
+        
+        <img src="assets/8medthod.png" alt="8 วิธีดูแลตนเอง">
+      </div>
+
+    </div>
+
     <div class="advice-box" id="adviceValue"></div>
 
-<h3>ค่ามาตรฐานฝุ่นละออง PM2.5 (µg/m³)</h3>
-<div class="arrow-scale-svg">
-  <!-- ดีมาก -->
-  <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#2196f3"/>
-    <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">0 - 15.0</text>
-    <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">ดีมาก</text>
-  </svg>
+    <h3>ค่ามาตรฐานฝุ่นละออง PM2.5 (µg/m³)</h3>
+    <div class="arrow-scale-svg">
+      <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#2196f3"/>
+        <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">0 - 15.0</text>
+        <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">ดีมาก</text>
+      </svg>
+    
+      <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#4caf50"/>
+        <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">15.1 - 25.0</text>
+        <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">ดี</text>
+      </svg>
+    
+      <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#ffeb3b"/>
+        <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">25.1 - 37.5</text>
+        <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">ปานกลาง</text>
+      </svg>
+    
+      <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#ff9800"/>
+        <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">37.6 - 75.0</text>
+        <text x="110" y="70" fill="#000000" font-size="16" font-weight="700" text-anchor="middle">เริ่มมีผลกระทบ</text>
+      </svg>
+    
+      <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#f44336"/>
+        <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">75.1 ขึ้นไป</text>
+        <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">มีผลต่อสุขภาพ</text>
+      </svg>
+    </div>
 
-  <!-- ดี -->
-  <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#4caf50"/>
-    <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">15.1 - 25.0</text>
-    <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">ดี</text>
-  </svg>
-
-  <!-- ปานกลาง -->
-  <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#ffeb3b"/>
-    <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">25.1 - 37.5</text>
-    <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">ปานกลาง</text>
-  </svg>
-
-  <!-- เริ่มมีผลกระทบ -->
-  <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#ff9800"/>
-    <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">37.6 - 75.0</text>
-    <text x="110" y="70" fill="#000000" font-size="16" font-weight="700" text-anchor="middle">เริ่มมีผลกระทบต่อสุขภาพ</text>
-  </svg>
-
-  <!-- มีผลต่อสุขภาพ -->
-  <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#f44336"/>
-    <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">75.1 ขึ้นไป</text>
-    <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">มีผลต่อสุขภาพ</text>
-  </svg>
-</div>
   </div>
-  <!-- โหลดไลบรารี html2canvas -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <script>
     function getLevel(pm) {
-  if (pm <= 25) return {text:"ดีมาก 😊", class:"good"};
-  if (pm <= 37.5) return {text:"ดี 😐", class:"moderate"};
-  if (pm <= 50) return {text:"ปานกลาง 😟", class:"unhealthy"};
-  if (pm <= 75) return {text:"เริ่มมีผลกระทบต่อสุขภาพ 😡", class:"very-unhealthy"};
-  return {text:"มีผลกระทบต่อสุขภาพ 🤢", class:"hazardous"};
-}
-function generateReport() {
-  document.getElementById("areaValue").innerText = "พื้นที่: " + document.getElementById("area").value;
-
-  // ✅ แปลงวันที่เป็น วันพุธ ที่ 3 ธันวาคม พ.ศ. 2568
-  const dateInput = document.getElementById("date").value;
-  if (dateInput) {
-    const dateObj = new Date(dateInput);
-
-    const days = ["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์"];
-    const months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
-                    "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
-
-    const dayName = days[dateObj.getDay()];
-    const day = dateObj.getDate();
-    const monthName = months[dateObj.getMonth()];
-    const yearBE = dateObj.getFullYear() + 543;
-
-    const formattedDate = `${dayName} ที่ ${day} ${monthName} ${yearBE}`;
-  document.getElementById("dateValue").innerText = formattedDate;
-  }
-
-  // ✅ เวลาแบบ HH:MM น.
-  const hour = document.getElementById("hour").value;
-  const minute = document.getElementById("minute").value;
-  let formattedTime = "";
-  if (hour !== "" && minute !== "") {
-    formattedTime = `${hour.padStart(2,'0')}:${minute.padStart(2,'0')} น.`;
-  }
-  document.getElementById("timeValue").innerText = "เวลา: " + formattedTime;
-
-  const stationNames = [
-    "จุดตรวจวัด:ศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง",
-    "จุดตรวจวัด:ศูนย์ราชการ ต.มาบตาพุด"
-  ];
-
-  let stationsHTML = "";
-  for (let i = 1; i <= 2; i++) {
-    let name = stationNames[i - 1];
-    let pm = parseFloat(document.getElementById("pm" + i).value);
-    if (!isNaN(pm)) {
-      let level = getLevel(pm);
-
-      const emoji = level.text.match(/[\u{1F600}-\u{1F64F}]/u)?.[0] || "";
-      const levelText = level.text.replace(emoji, "").trim();
-
-     stationsHTML += `
-  <div class="station ${level.class}">
-    <div class="station-name">${name}</div>
-    <div class="pm-highlight">ค่า PM2.5: ${pm} µg/m³</div>
-    <div class="emoji">${emoji}</div>
-    <div class="level-highlight">ระดับ: ${levelText}</div>
-  </div>
-`;
+      if (pm <= 25) return {text:"ดีมาก 😊", class:"good"};
+      if (pm <= 37.5) return {text:"ดี 😐", class:"moderate"};
+      if (pm <= 50) return {text:"ปานกลาง 😟", class:"unhealthy"};
+      if (pm <= 75) return {text:"เริ่มมีผลกระทบต่อสุขภาพ 😡", class:"very-unhealthy"};
+      return {text:"มีผลกระทบต่อสุขภาพ 🤢", class:"hazardous"};
     }
-  }
 
-  document.getElementById("stations").innerHTML = stationsHTML;
+    function generateReport() {
+      document.getElementById("areaValue").innerText = "พื้นที่: " + document.getElementById("area").value;
 
-  // ตารางคำแนะนำ 3 คอลัมน์ พร้อมสีพื้นหลังตามเกณฑ์
-  document.getElementById("adviceValue").innerHTML = `
-  😷 <strong>คำแนะนำการปฏิบัติตัวสำหรับประชาชน</strong><br><br>
-  <table class="advice-table">
-    <tr>
-      <th>เกณฑ์คุณภาพอากาศ (µg/m³)</th>
-      <th>ประชาชนทั่วไป</th>
-      <th>กลุ่มเสี่ยง</th>
-    </tr>
-    <tr class="advice-good">
-      <td>0 - 15</td>
-      <td>ทำกิจกรรมได้ตามปกติ</td>
-      <td>ทำกิจกรรมได้ตามปกติ</td>
-    </tr>
-    <tr class="advice-moderate">
-      <td>15.1 - 25</td>
-      <td>ทำกิจกรรมได้ตามปกติ</td>
-      <td>เลี่ยงทำกิจกรรมกลางแจ้ง</td>
-    </tr>
-    <tr class="advice-unhealthy">
-      <td>25.1 - 37.5</td>
-      <td>เลี่ยงทำกิจกรรมกลางแจ้ง</td>
-      <td>ลดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
-    </tr>
-    <tr class="advice-very-unhealthy">
-      <td>37.6 - 75</td>
-      <td>ลดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
-      <td>จำกัดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
-    </tr>
-    <tr class="advice-hazardous">
-      <td>มากกว่า 75</td>
-      <td>จำกัดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
-      <td>งดทำกิจกรรมกลางแจ้ง, สวมหน้ากาก, อยู่ในห้องปลอดฝุ่น</td>
-    </tr>
-  </table>
-  `;
-  document.getElementById("report").style.display = "block";
-}
+      // ✅ แปลงวันที่
+      const dateInput = document.getElementById("date").value;
+      if (dateInput) {
+        const dateObj = new Date(dateInput);
+        const days = ["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์"];
+        const months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
+                        "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+        const dayName = days[dateObj.getDay()];
+        const day = dateObj.getDate();
+        const monthName = months[dateObj.getMonth()];
+        const yearBE = dateObj.getFullYear() + 543;
+
+        document.getElementById("dateValue").innerText = `${dayName} ที่ ${day} ${monthName} ${yearBE}`;
+      }
+
+      // ✅ เวลาแบบ HH:MM น.
+      const hour = document.getElementById("hour").value;
+      const minute = document.getElementById("minute").value;
+      if (hour !== "" && minute !== "") {
+        document.getElementById("timeValue").innerText = `เวลา: ${hour.padStart(2,'0')}:${minute.padStart(2,'0')} น.`;
+      }
+
+      const stationNames = [
+        "จุดตรวจวัด:ศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง",
+        "จุดตรวจวัด:ศูนย์ราชการ ต.มาบตาพุด"
+      ];
+
+      let stationsHTML = "";
+      for (let i = 1; i <= 2; i++) {
+        let name = stationNames[i - 1];
+        let pm = parseFloat(document.getElementById("pm" + i).value);
+        if (!isNaN(pm)) {
+          let level = getLevel(pm);
+          const emoji = level.text.match(/[\u{1F600}-\u{1F64F}]/u)?.[0] || "";
+          const levelText = level.text.replace(emoji, "").trim();
+
+          stationsHTML += `
+            <div class="station ${level.class}">
+              <div class="station-name">${name}</div>
+              <div class="pm-highlight">ค่า PM2.5: ${pm} µg/m³</div>
+              <div class="emoji">${emoji}</div>
+              <div class="level-highlight">ระดับ: ${levelText}</div>
+            </div>`;
+        }
+      }
+
+      document.getElementById("stations").innerHTML = stationsHTML;
+
+      // ตารางคำแนะนำ
+      document.getElementById("adviceValue").innerHTML = `
+      😷 <strong>คำแนะนำการปฏิบัติตัวสำหรับประชาชน</strong><br><br>
+      <table class="advice-table">
+        <tr>
+          <th>เกณฑ์คุณภาพอากาศ (µg/m³)</th>
+          <th>ประชาชนทั่วไป</th>
+          <th>กลุ่มเสี่ยง</th>
+        </tr>
+        <tr class="advice-good">
+          <td>0 - 15</td>
+          <td>ทำกิจกรรมได้ตามปกติ</td>
+          <td>ทำกิจกรรมได้ตามปกติ</td>
+        </tr>
+        <tr class="advice-moderate">
+          <td>15.1 - 25</td>
+          <td>ทำกิจกรรมได้ตามปกติ</td>
+          <td>เลี่ยงทำกิจกรรมกลางแจ้ง</td>
+        </tr>
+        <tr class="advice-unhealthy">
+          <td>25.1 - 37.5</td>
+          <td>เลี่ยงทำกิจกรรมกลางแจ้ง</td>
+          <td>ลดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
+        </tr>
+        <tr class="advice-very-unhealthy">
+          <td>37.6 - 75</td>
+          <td>ลดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
+          <td>จำกัดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
+        </tr>
+        <tr class="advice-hazardous">
+          <td>มากกว่า 75</td>
+          <td>จำกัดเวลา ทำกิจกรรมกลางแจ้ง, สวมหน้ากาก</td>
+          <td>งดทำกิจกรรมกลางแจ้ง, สวมหน้ากาก, อยู่ในห้องปลอดฝุ่น</td>
+        </tr>
+      </table>
+      `;
+      document.getElementById("report").style.display = "block";
+    }
+
     function downloadImage() {
       const report = document.getElementById("report");
-html2canvas(report, { scale: 2 }).then(canvas => {
-  const link = document.createElement("a");
-  link.download = "pm25-report.png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
-});
+      html2canvas(report, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "pm25-report.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
     }
   </script>
 </body>
