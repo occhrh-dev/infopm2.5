@@ -36,10 +36,10 @@ h2 {
 .header-group {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px;            /* เพิ่มระยะห่างระหว่างโลโก้ให้ไม่อึดอัด */
   margin-top: -30px;
-  margin-bottom: 10px;
+  margin-bottom: -10px;
 }
 
 /* 🔧 ปรับขนาดโลโก้แยกกันตรงนี้ครับ */
@@ -49,11 +49,12 @@ h2 {
 }
 
 .logo-occ {
-  height: 120px;         /* โลโก้กลาง (OCC) ปรับเลขนี้ให้ใหญ่ขึ้นนิดนึง */
+  height: 130px;         /* โลโก้กลาง (OCC) ปรับเลขนี้ให้ใหญ่ขึ้นนิดนึง */
   width: auto;
 }
 
 .header-text {
+  align-self: center;
   text-align: left;
   font-size: 14px;
   font-weight: bold;
@@ -462,5 +463,6 @@ button:last-of-type { background: #4caf50; color: #fff; }
   </script>
 </body>
 </html>
+
 
 
