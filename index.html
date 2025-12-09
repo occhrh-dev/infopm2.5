@@ -14,7 +14,6 @@ body {
   padding: 20px;
 }
 
-/* กล่องฟอร์มและกล่องรายงาน */
 .form-section, .infographic {
   background: #fff;
   padding: 15px;
@@ -25,7 +24,6 @@ body {
 
 .infographic { text-align: center; }
 
-/* หัวข้อรายงาน */
 h2 {
   background: linear-gradient(90deg, #4caf50, #ffeb3b, #ff9800, #f44336, #9c27b0);
   color: #000;
@@ -34,32 +32,37 @@ h2 {
   margin-top: 5px;
 }
 
-/* --- 2. ส่วนหัวกระดาษใหม่ (3 ส่วนเรียงกัน) --- */
-/* แก้ไขจาก Logo เดิม เป็น Group */
+/* --- 2. ส่วนหัวกระดาษ (Logo HRH + Logo OCC + ข้อความ) --- */
 .header-group {
-  display: flex;            /* เรียงแนวนอน */
-  justify-content: center;  /* จัดทั้งกลุ่มให้อยู่กึ่งกลางหน้ากระดาษ */
-  align-items: center;      /* จัดให้แนวตั้งตรงกัน */
-  gap: 15px;                /* ระยะห่างระหว่าง รูป-รูป-ข้อความ */
-  margin-top: -30px;        /* ดึงขึ้นด้านบน */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;            /* เพิ่มระยะห่างระหว่างโลโก้ให้ไม่อึดอัด */
+  margin-top: -30px;
   margin-bottom: 10px;
 }
 
-.logo-img {
-  height: 90px;             /* ปรับความสูงโลโก้ให้พอดีเมื่ออยู่รวมกัน */
+/* 🔧 ปรับขนาดโลโก้แยกกันตรงนี้ครับ */
+.logo-hrh {
+  height: 80px;         /* โลโก้ซ้าย (HRH) ปรับเลขนี้ถ้ายังใหญ่ไป */
+  width: auto;
+}
+
+.logo-occ {
+  height: 95px;         /* โลโก้กลาง (OCC) ปรับเลขนี้ให้ใหญ่ขึ้นนิดนึง */
   width: auto;
 }
 
 .header-text {
-  text-align: left;         /* ข้อความชิดซ้ายให้อ่านง่าย */
-  font-size: 14px;          /* ขนาดตัวอักษร */
-  font-weight: bold;        /* ตัวหนา */
-  color: #4a148c;           /* สีม่วงเข้ม */
-  line-height: 1.3;         /* ระยะห่างบรรทัด */
-  max-width: 350px;         /* จำกัดความกว้างไม่ให้ข้อความยาวเกิน */
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+  color: #4a148c;
+  line-height: 1.3;
+  max-width: 380px;     /* ขยายพื้นที่ข้อความอีกนิด */
 }
 
-/* --- 3. ส่วนเนื้อหาหลัก (แบ่งซ้าย-ขวา) --- */
+/* --- 3. ส่วนเนื้อหาหลัก --- */
 .main-content {
   display: flex;
   justify-content: space-between;
@@ -68,14 +71,12 @@ h2 {
   gap: 15px;
 }
 
-/* ด้านซ้าย: ข้อมูลสถานี */
 .stations {
   width: 55%; 
   display: flex; 
   flex-direction: column;
 }
 
-/* ด้านขวา: พื้นที่ใส่รูปคำแนะนำ */
 .right-sidebar {
   width: 43%; 
   display: flex; 
@@ -83,7 +84,6 @@ h2 {
   gap: 8px;
 }
 
-/* สไตล์ของรูปเล็ก 2 รูปในด้านขวา */
 .right-sidebar img {
   width: 48%; 
   height: auto;
@@ -113,14 +113,12 @@ h2 {
   margin-bottom: 5px;
 }
 
-/* สีพื้นหลังตามค่า PM */
 .good { background: #2196f3; }
 .moderate { background: #4caf50; color: #000; }
 .unhealthy { background: #ffeb3b; color: #000; }
 .very-unhealthy { background: #ff9800; }
 .hazardous { background: #f44336; }
 
-/* กล่องไฮไลท์ค่าตัวเลข */
 .pm-highlight {
   font-size: 26px;
   font-weight: bold;
@@ -214,7 +212,6 @@ h2 {
   position: relative;
 }
 
-/* ลูกศรเกณฑ์ด้านล่าง */
 .arrow-scale-svg {
   display: flex;
   flex-wrap: wrap;
@@ -228,7 +225,6 @@ h2 {
   height: auto;
 }
 
-/* ปุ่มกด */
 button {
   padding: 10px 15px;
   margin-top: 10px;
@@ -240,12 +236,10 @@ button {
 button:first-of-type { background: #2196f3; color: #fff; }
 button:last-of-type { background: #4caf50; color: #fff; }
 
-/* --- Responsive (มือถือ) --- */
 @media (max-width: 600px) {
   .station { font-size: 14px; }
   h2 { font-size: 18px; }
   
-  /* มือถือ: ส่วนหัวเรียงแนวตั้ง */
   .header-group {
     flex-direction: column;
     text-align: center;
@@ -253,7 +247,6 @@ button:last-of-type { background: #4caf50; color: #fff; }
   .header-text {
     text-align: center;
   }
-
   .main-content, .right-sidebar {
     flex-direction: column; 
   }
@@ -289,9 +282,9 @@ button:last-of-type { background: #4caf50; color: #fff; }
   <div id="report" class="infographic a4" style="display:none;">
     
     <div class="header-group">
-      <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-img">
+      <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-hrh">
       
-      <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-img">
+      <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-occ">
       
       <div class="header-text">
         งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม<br>
