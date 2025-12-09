@@ -80,40 +80,42 @@ h2 {
     white-space: normal;
   }
 }
-
 /* --- 3. ส่วนเนื้อหาหลัก --- */
 .main-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 10px;
-  gap: 15px;
+  display: flex;
+  justify-content: space-between;
+  /* ✅ เพิ่ม stretch เพื่อให้คอลัมน์ขวาสูงเท่าคอลัมน์ซ้าย */
+  align-items: stretch; 
+  margin-top: 10px;
+  gap: 15px;
 }
 
 .stations {
-  width: 55%; 
-  display: flex; 
-  flex-direction: column;
+  width: 55%; 
+  display: flex; 
+  flex-direction: column;
 }
 
 .right-sidebar {
-  width: 43%; 
-  display: flex; 
-  justify-content: space-between;
-  gap: 8px;
+  width: 43%; 
+  display: flex; 
+  /* ✅ สำคัญ: เปลี่ยนเป็น flex-direction: column เพื่อให้ margin-top แยกรูปทำงานได้ */
+  flex-direction: column; 
+  justify-content: flex-start; /* เริ่มจากด้านบน */
+  gap: 8px;
 }
 
 .right-sidebar img {
-  width: 48%; 
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  background: #fff;
-  object-fit: contain;
-  align-self: flex-start;
-  border: 1px solid #ddd;
+  width: 48%; 
+  height: auto;
+  border-radius: 8px;
+  /* ✅ ทำให้ภาพเด่นขึ้น: เพิ่มเงาเข้มและพื้นหลังขาว */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4); 
+  background: #ffffff; 
+  object-fit: contain;
+  /* ลบ align-self: flex-start ออกเพราะถูกแทนที่ด้วย margin-top ใน HTML */
+  border: 4px solid #f0f0f0; 
 }
-
 /* --- 4. สไตล์ของกล่องสถานี --- */
 .station {
   margin: 0 0 15px 0;
@@ -449,3 +451,4 @@ function generateReport() {
   </script>
 </body>
 </html>
+
