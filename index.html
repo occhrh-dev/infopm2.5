@@ -122,41 +122,27 @@ button:last-of-type { background: #4caf50; color: #fff; }
 }
 
 .right-sidebar {
+    /* คอลัมน์ด้านขวา (สำหรับรูปภาพ) */
     width: 43%; 
     display: flex; 
     flex-direction: column;
     justify-content: flex-start;
-    gap: 5px; 
+    gap: 0; /* ลบระยะห่างระหว่างรูปภาพที่ไม่ต้องการแล้ว */
 }
 
-/* --- 4.1 รูปภาพส่วนบน (Clinic/PM Pic) --- */
+/* 🌟🌟 สไตล์รูปภาพเดี่ยวที่ขยายเต็มพื้นที่ (สำหรับ Clinic_pic.png) 🌟🌟 */
 .right-sidebar .top-pic { 
-    width: 100%;
+    width: 100%; /* ขยายเต็มความกว้างคอลัมน์ */
     height: auto;
     border-radius: 8px;
     background: #ffffff;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    margin-bottom: 5px;
+    /* ไม่ต้องมี margin-bottom หรือ gap เยอะ เพราะเหลือรูปเดียว */
+    margin-bottom: 0px; 
 }
 
-/* --- 4.2 รูปภาพส่วนล่าง (5/8 Methods) --- */
-.method-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 5px;
-    width: 100%;
-    margin-top: 5px;
-}
+/* ❌ ลบกลุ่ม .method-container และ .method-container img ออกทั้งหมด */
 
-.method-container img {
-    width: 48%; 
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4); 
-    background: #ffffff; 
-    border: 4px solid #f0f0f0; 
-    object-fit: contain;
-}
 
 /* ========================================================================= */
 /* --- 5. สไตล์ของกล่องข้อมูลสถานี (Report Cards) --- */
@@ -171,12 +157,12 @@ button:last-of-type { background: #4caf50; color: #fff; }
     box-sizing: border-box;
 }
 
-/* 🌟🌟 ส่วนที่ถูกเพิ่ม/แก้ไข: สีพื้นหลังของกล่องสถานีหลัก 🌟🌟 */
-.good { background: #2196f3; }       /* สีฟ้า */
-.moderate { background: #4caf50; }    /* สีเขียว */
-.unhealthy { background: #ffeb3b; }   /* สีเหลือง */
-.very-unhealthy { background: #ff9800; } /* สีส้ม */
-.hazardous { background: #f44336; }  /* สีแดง */
+/* 🌟🌟 สีพื้นหลังของกล่องสถานีหลัก 🌟🌟 */
+.good { background: #2196f3; }       
+.moderate { background: #4caf50; }    
+.unhealthy { background: #ffeb3b; }   
+.very-unhealthy { background: #ff9800; } 
+.hazardous { background: #f44336; }  
 /* ------------------------------------------------ */
 
 .station-name {
@@ -218,7 +204,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     /* การเพิ่ม Contrast ให้ 'ปานกลาง' (สีเหลือง) */
     text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.3); /* เงาจางๆ */
     -webkit-text-stroke: 0.5px #000000; /* ขอบบางๆ */
-    text-stroke: 0.5px #000000; 
+    text-stroke: 0.5px #000000;  
 }
 
 /* ========================================================================= */
@@ -273,8 +259,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
         width: 100%;
     }
     .right-sidebar { gap: 10px; margin-top: 15px; }
-    .method-container { flex-direction: column; }
-    .method-container img { width: 100%; }
+    /* ❌ ลบสไตล์มือถือที่ไม่จำเป็นออก */
 }
 </style>
 </head>
@@ -335,15 +320,8 @@ button:last-of-type { background: #4caf50; color: #fff; }
       <div id="stations" class="stations"></div>
 
       <div class="right-sidebar">
-          <div class="top-pic-container" style="display: flex; justify-content: space-between; gap: 5px; width: 100%;">
-              <img src="assets/Clinic_pic.png" alt="Clinic Pic" class="top-pic" style="width: 49%;">
-              <img src="assets/PM_pic.png" alt="PM Pic" class="top-pic" style="width: 49%;">
-          </div>
-
-          <div class="method-container">
-              <img src="assets/5medthod.png" alt="5 วิธีป้องกัน" style="margin-top: 0px;">
-              <img src="assets/8medthod.png" alt="8 วิธีดูแลตนเอง" style="margin-top: 0px;">
-          </div>
+         <div class="right-sidebar">
+          <img src="assets/Clinic_pic.png" alt="Clinic Pic" class="top-pic full-width-single-pic">
       </div>
     </div>
 
@@ -481,6 +459,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
   </script>
 </body>
 </html>
+
 
 
 
