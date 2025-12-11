@@ -31,7 +31,6 @@ h2 {
   color: #000;
   padding: 10px;
   border-radius: 8px;
-  /* ✅ 3. ลดระยะห่างด้านบนของหัวข้อลงเหลือ 0 */
   margin-top: 0px;
 }
 
@@ -40,10 +39,8 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: flex-start; /* ชิดบน */
-  /* ✅ 1. ลดระยะห่างระหว่างโลโก้และข้อความ (ให้ชิดกันมากขึ้น) */
   gap: 4px;
   margin-top: -30px;
-  /* ✅ 3. ดึงส่วนหัวข้อ (h2) ให้ขยับขึ้นมาใกล้อีก */
   margin-bottom: -20px;
 }
 
@@ -58,19 +55,15 @@ h2 {
 }
 
 .header-text {
-  /* ✅ 2. ขยับข้อความขึ้นไป */
   margin-top: 10px; 
   text-align: left;
-  font-size: 14px;
+  /* ✅ 2. ขยายขนาดตัวอักษรชื่อโรงพยาบาล */
+  font-size: 16px; 
   font-weight: bold;
   color: #4a148c;
   line-height: 1.3;
-  
-  /* 🔧 แก้ไขตรงนี้ครับ: ขยายความกว้างจาก 420px เป็น 550px */
   max-width: 550px; 
-  
   text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
-  /* ป้องกันการตัดคำมั่วซั่ว */
   white-space: nowrap; 
 }
 
@@ -81,11 +74,11 @@ h2 {
   }
 }
 
-/* --- 3. ส่วนเนื้อหาหลัก --- */
+/* --- 3. ส่วนเนื้อหาหลัก (2 คอลัมน์) --- */
 .main-content {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch; /* ทำให้คอลัมน์ขวาสูงเท่าคอลัมน์ซ้าย */
   margin-top: 10px;
   gap: 15px;
 }
@@ -95,33 +88,44 @@ h2 {
   display: flex; 
   flex-direction: column;
 }
+
 .right-sidebar {
   width: 43%; 
   display: flex; 
+  flex-direction: column; /* เรียงจากบนลงล่าง */
+  justify-content: flex-start; /* จัดเรียงเริ่มต้นจากด้านบนสุด */
+  gap: 5px; /* ระยะห่างระหว่างกล่องรูป */
+}
+
+/* ✅ 3. สไตล์รูปภาพใหม่ (Clinic/PM) และรูปคำแนะนำ (5/8medthod) */
+.right-sidebar .top-pic { 
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 5px;
+}
+
+.method-container {
+  display: flex;
   justify-content: space-between;
-  gap: 8px;
+  gap: 5px;
+  width: 100%;
+  margin-top: 5px; /* เว้นระยะห่างจากรูป Clinic/PM ด้านบน */
 }
-.method-img {
-  padding: 2px;
-  background: rgba(255, 255, 255, 0.85);   /* กล่องขาวโปร่งแสง */
-  backdrop-filter: blur(4px);              /* เบลอพื้นหลังหลังรูป */
-  border-radius: 5px;                     /* มุมโค้ง */
-  box-shadow:
-    0 0 8px rgba(106, 27, 154, 0.6),
-    0 0 18px rgba(106, 27, 154, 0.4),
-    0 0 28px rgba(106, 27, 154, 0.25);
-  border: 2px solid #6A1B9A !important;
-}
-.right-sidebar img {
+
+.method-container img {
   width: 48%; 
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  background: #fff;
+  /* ✅ ทำให้ภาพเด่นขึ้น: เพิ่มเงาเข้มขึ้นมาก */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4); 
+  background: #ffffff; 
+  border: 4px solid #f0f0f0; 
   object-fit: contain;
-  align-self: flex-start;
-  border: 1px solid #ddd;
 }
+
 /* --- 4. สไตล์ของกล่องสถานี --- */
 .station {
   margin: 0 0 15px 0;
@@ -176,19 +180,19 @@ h2 {
   text-align: center;
 }
 
-/* --- 5. ส่วนวันที่และเวลา --- */
+/* --- 5. ส่วนวันที่และเวลา (ขยายขนาด) --- */
 #areaValue::before { content: "📍 "; font-size: 20px; }
 #dateValue::before { content: "📅 "; font-size: 20px; }
 #timeValue::before { content: "⏰ "; font-size: 20px; }
 
 #areaValue, #dateValue, #timeValue {
-  font-size: 16px; 
+  font-size: 18px; /* ✅ ขยายขนาดฟอนต์ */
   font-weight: bold;
   color: #4a148c;
   background: #e1bee7;
-  padding: 4px 8px;
+  padding: 6px 12px; /* ✅ ขยาย padding */
   border-radius: 6px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   display: inline-block;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -202,7 +206,7 @@ h2 {
   border-radius: 10px;  
   box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
   display: block;       
-}  
+}
 
 /* --- 7. ส่วนกระดาษ A4 --- */
 .a4 {
@@ -217,6 +221,12 @@ h2 {
   box-sizing: border-box;
   position: relative;
 }
+
+/* ❌ ลบส่วน arrow-scale-svg ทั้งหมดออกตามคำขอ */
+.arrow-scale-svg {
+    display: none;
+}
+
 button {
   padding: 10px 15px;
   margin-top: 10px;
@@ -240,7 +250,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
   .header-text {
     text-align: center;
     margin-top: 10px;
-    white-space: normal; /* มือถือให้ขึ้นบรรทัดใหม่ได้ */
+    white-space: normal; 
   }
   
   .main-content, .right-sidebar {
@@ -250,6 +260,8 @@ button:last-of-type { background: #4caf50; color: #fff; }
     width: 100%;
   }
   .right-sidebar { gap: 10px; margin-top: 15px; }
+  .method-container { flex-direction: column; }
+  .method-container img { width: 100%; }
 }
 </style>
 </head>
@@ -261,7 +273,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     <label>พื้นที่: 
         <select id="areaSelector" onchange="toggleAreaInput()">
             <option value="">-- เลือกพื้นที่ --</option>
-            <option value="ต.มาบตาพุด/ต.ห้วยโป่ง">ต.มาบตาพุด/ต.ห้วยโป่ง</option>
+            <option value="เขตเทศบาลนครมาบตาพุด">เขตเทศบาลนครมาบตาพุด</option>
             <option value="manual">ระบุเอง</option>
         </select>
     </label><br><br>
@@ -286,14 +298,16 @@ button:last-of-type { background: #4caf50; color: #fff; }
     <button onclick="downloadImage()">📸 บันทึกเป็นภาพ</button> 
   </div>
 
- <div id="report" class="infographic a4" style="display:none;">
+  <div id="report" class="infographic a4" style="display:none;">
     
     <div class="header-group">
-        <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-hrh">
-        <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-occ">
-        <div class="header-text">
-            โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี ระยอง
-        </div>
+      <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-hrh">
+      <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-occ">
+      <div class="header-text">
+        งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม<br>
+        กลุ่มงานอาชีวเวชกรรม<br>
+        โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี ระยอง
+      </div>
     </div>
 
     <h2>รายงานสถานการณ์ PM2<span style="font-size: 0.7em; vertical-align: sub;">.5</span></h2>
@@ -305,13 +319,20 @@ button:last-of-type { background: #4caf50; color: #fff; }
     <div id="trendSummary"></div> 
 
     <div class="main-content">
-        
-        <div id="stations" class="stations"></div>
+      
+      <div id="stations" class="stations"></div>
 
-        <div class="right-sidebar">
-            <img src="assets/5medthod.png" class="method-img" style="margin-top: 300px;">
-            <img src="assets/8medthod.png" class="method-img" style="margin-top: 225px;">
-        </div>
+      <div class="right-sidebar">
+          <div class="top-pic-container" style="display: flex; justify-content: space-between; gap: 5px; width: 100%;">
+              <img src="assets/Clinic_pic.jpg" alt="Clinic Pic" class="top-pic" style="width: 49%;">
+              <img src="assets/PM_pic.jpg" alt="PM Pic" class="top-pic" style="width: 49%;">
+          </div>
+
+          <div class="method-container">
+              <img src="assets/5medthod.png" alt="5 วิธีป้องกัน" style="margin-top: 0px;">
+              <img src="assets/8medthod.png" alt="8 วิธีดูแลตนเอง" style="margin-top: 0px;">
+          </div>
+      </div>
     </div>
 
     <img src="assets/advice_table.jpg" alt="ตารางคำแนะนำ" class="advice-img">
@@ -321,8 +342,10 @@ button:last-of-type { background: #4caf50; color: #fff; }
         โทร 038-684444 ต่อ 3106 เบอร์มือถือ 081-7810248
     </h3>
     
-</div> 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <script>
     function toggleAreaInput() {
     const selector = document.getElementById("areaSelector");
