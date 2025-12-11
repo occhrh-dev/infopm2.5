@@ -233,7 +233,8 @@ button:last-of-type { background: #4caf50; color: #fff; }
     max-width: 900px; 
     height: auto;
     object-fit: contain;
-    
+    /* 🚨 ลดความสูง: ปรับค่า max-height ลงเหลือ 350px */
+    max-height: 350px; /* 👈 สามารถปรับค่านี้นายป๊อป หากยังสูงไป */
     /* 🚨 ชิดกัน: ลดระยะห่างด้านบนให้เหลือ 5px (เกือบชิด) */
     margin: 0px auto 0 auto; 
     display: block; 
@@ -241,7 +242,6 @@ button:last-of-type { background: #4caf50; color: #fff; }
     border-radius: 0px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
 
 .a4 {
     /* พื้นหลังกระดาษ A4 */
@@ -501,6 +501,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     </script>
 </body>
 </html>
+
 
 
 
