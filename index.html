@@ -58,7 +58,7 @@ h2 {
   margin-top: 10px; 
   text-align: left;
   /* ✅ 2. ขยายขนาดตัวอักษรชื่อโรงพยาบาล */
-  font-size: 16px; 
+  font-size: 24px; 
   font-weight: bold;
   color: #4a148c;
   line-height: 1.3;
@@ -221,12 +221,6 @@ h2 {
   box-sizing: border-box;
   position: relative;
 }
-
-/* ❌ ลบส่วน arrow-scale-svg ทั้งหมดออกตามคำขอ */
-.arrow-scale-svg {
-    display: none;
-}
-
 button {
   padding: 10px 15px;
   margin-top: 10px;
@@ -273,7 +267,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     <label>พื้นที่: 
         <select id="areaSelector" onchange="toggleAreaInput()">
             <option value="">-- เลือกพื้นที่ --</option>
-            <option value="เขตเทศบาลนครมาบตาพุด">เขตเทศบาลนครมาบตาพุด</option>
+            <option value="ต.มาบตาพุด/ต.ห้วยโป่ง">ต.มาบตาพุด/ต.ห้วยโป่ง</option>
             <option value="manual">ระบุเอง</option>
         </select>
     </label><br><br>
@@ -304,13 +298,11 @@ button:last-of-type { background: #4caf50; color: #fff; }
       <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-hrh">
       <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-occ">
       <div class="header-text">
-        งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม<br>
-        กลุ่มงานอาชีวเวชกรรม<br>
         โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี ระยอง
       </div>
     </div>
 
-    <h2>รายงานสถานการณ์ PM2<span style="font-size: 0.7em; vertical-align: sub;">.5</span></h2>
+    <h2>รายงานสถานการณ์ฝุ่น PM <span style="font-size: 0.7em; vertical-align: sub;">2.5</span></h2>
     
     <div id="areaValue"></div>
     <div id="dateValue"></div>
@@ -337,7 +329,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
 
     <img src="assets/advice_table.jpg" alt="ตารางคำแนะนำ" class="advice-img">
     
-    <h3 style="margin-top: 20px; padding: 10px; background: #e1bee7; border-radius: 8px;">
+    <h3 style="margin-top: 16px; padding: 10px; background: #e1bee7; border-radius: 8px;">
         งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม กลุ่มงานอาชีวเวชกรรม<br>
         โทร 038-684444 ต่อ 3106 เบอร์มือถือ 081-7810248
     </h3>
@@ -436,4 +428,5 @@ function generateReport() {
   </script>
 </body>
 </html>
+
 
