@@ -203,17 +203,17 @@ button:last-of-type { background: #4caf50; color: #fff; }
 
 /* ========================================================================= */
 /* --- 6. ส่วนท้ายรายงาน (ตารางคำแนะนำ และ Footer) --- */
-/* ========================================================================= */
-.advice-img {
-    width: 100%; /* ขยายให้เต็มความกว้าง */
-    max-width: 850px; 
+/* 2. สไตล์สำหรับ advice_table.jpg (advice-table-img) */
+.advice-table-img {
+    width: 100%; /* ขยายเต็มความกว้างของคอลัมน์ด้านขวา */
     height: auto;
-    margin: 15px auto;    
-    border-radius: 10px;  
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
-    display: block;       
+    max-height: 300px; /* จำกัดความสูงสูงสุดของตารางคำแนะนำ */
+    object-fit: contain;
+    margin-top: 0px; /* ใช้ gap ของ right-sidebar แทน */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: block; 
 }
-
 .a4 {
     /* พื้นหลังกระดาษ A4 */
     width: 210mm;
@@ -454,6 +454,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
   </script>
 </body>
 </html>
+
 
 
 
