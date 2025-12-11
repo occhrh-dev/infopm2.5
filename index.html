@@ -29,6 +29,8 @@ body {
 h2 {
   background: linear-gradient(90deg, #4caf50, #ffeb3b, #ff9800, #f44336, #9c27b0);
   color: #000;
+  /* ✅ เพิ่มขนาดตัวอักษรให้ดูเด่นขึ้น */
+  font-size: 28px; 
   padding: 10px;
   border-radius: 8px;
   margin-top: 0px;
@@ -259,7 +261,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
 }
 </style>
 </head>
-<body>
+<body onload="setInitialValues()">
 
   <div class="form-section">
     <h2>กรอกข้อมูลสถานการณ์ฝุ่น PM2.5</h2>
@@ -351,6 +353,24 @@ button:last-of-type { background: #4caf50; color: #fff; }
         document.getElementById("manualAreaInput").value = ""; 
     }
 }
+    // ฟังก์ชันกำหนดค่าเริ่มต้นของ Form
+function setInitialValues() {
+    // 1. พื้นที่: ตั้งค่า Drop-down
+    document.getElementById("areaSelector").value = "ต.มาบตาพุด/ต.ห้วยโป่ง";
+
+    // 2. เวลา: ตั้งค่าเป็น 08:00 น.
+    document.getElementById("hour").value = "08";
+    document.getElementById("minute").value = "00";
+
+    // 3. วันที่: ตั้งค่าเป็นวันนี้
+    const today = new Date();
+    // แปลงให้เป็นรูปแบบ YYYY-MM-DD ที่ช่อง type="date" ต้องการ
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0'); // เดือนเป็น 01-12
+    const dd = String(today.getDate()).padStart(2, '0');      // วันที่
+    
+    document.getElementById("date").value = `${yyyy}-${mm}-${dd}`;
+}
     function getLevel(pm) {
       if (pm <= 25) return {text:"ดีมาก 😊", class:"good"};
       if (pm <= 37.5) return {text:"ดี 😐", class:"moderate"};
@@ -429,6 +449,7 @@ function generateReport() {
   </script>
 </body>
 </html>
+
 
 
 
