@@ -167,7 +167,7 @@ h2 {
 .level-highlight {
   font-size: 26px;
   font-weight: bold;
-  color: #b71c1c;
+  /* ❗ ลบ color: #b71c1c; ออก */
   background: #ffcdd2;
   padding: 10px;
   border-radius: 8px;
@@ -371,13 +371,14 @@ function setInitialValues() {
     
     document.getElementById("date").value = `${yyyy}-${mm}-${dd}`;
 }
-    function getLevel(pm) {
-      if (pm <= 25) return {text:"ดีมาก 😀", class:"good"};
-      if (pm <= 37.5) return {text:"ดี 🙂", class:"moderate"};
-      if (pm <= 50) return {text:"ปานกลาง 😐", class:"unhealthy"};
-      if (pm <= 75) return {text:"เริ่มมีผลกระทบต่อสุขภาพ 😡", class:"very-unhealthy"};
-      return {text:"มีผลกระทบต่อสุขภาพ 🤢", class:"hazardous"};
-    }
+   // ✅ เพิ่มตัวแปร color และ bgColor ใน Object ที่ return
+function getLevel(pm) {
+  if (pm <= 25) return {text:"ดีมาก 😃", class:"good", color: "#000000", bgColor: "#bbdefb"}; // สีดำ
+  if (pm <= 37.5) return {text:"ดี 🙂", class:"moderate", color: "#000000", bgColor: "#c8e6c9"}; // สีดำ
+  if (pm <= 50) return {text:"ปานกลาง 😐", class:"unhealthy", color: "#000000", bgColor: "#fff9c4"}; // สีดำ
+  if (pm <= 75) return {text:"เริ่มมีผลกระทบต่อสุขภาพ 😡", class:"very-unhealthy", color: "#ffffff", bgColor: "#ffcc80"}; // สีขาว
+  return {text:"มีผลกระทบต่อสุขภาพ 🤢", class:"hazardous", color: "#ffffff", bgColor: "#ff8a80"}; // สีขาว
+}
 function generateReport() {
     let areaValue = document.getElementById("areaSelector").value;
     // ถ้าเลือก "ระบุเอง" ให้ดึงค่าจากช่องพิมพ์มาใช้แทน
@@ -427,7 +428,7 @@ function generateReport() {
               <div class="station-name">${name}</div>
               <div class="pm-highlight">ค่า PM <span style="font-size: 0.7em; vertical-align: sub;">2.5</span>: ${pm} µg/m³</div>
               <div class="emoji">${emoji}</div>
-              <div class="level-highlight">ระดับ: ${levelText}</div>
+              <div class="level-highlight" style="color: ${level.color}; background: ${level.bgColor};">ระดับ: ${levelText}</div>
             </div>`;
         }
       }
@@ -449,3 +450,4 @@ function generateReport() {
   </script>
 </body>
 </html>
+
