@@ -127,10 +127,10 @@ button:last-of-type { background: #4caf50; color: #fff; }
     display: flex; 
     flex-direction: column;
     justify-content: flex-start;
-    gap: 15px; /* รักษาระยะห่างระหว่างรูปภาพในคอลัมน์ขวา */
+    gap: 0; /* ลบ gap ทิ้ง เพราะเหลือแค่ Clinic_pic.png รูปเดียวในคอลัมน์ขวา */
 }
 
-/* 🌟🌟 สไตล์สำหรับรูปภาพในคอลัมน์ขวา (เหลือแค่ 2 รูป) 🌟🌟 */
+/* 🌟🌟 สไตล์สำหรับรูปภาพในคอลัมน์ขวา (เหลือแค่ Clinic_pic.png) 🌟🌟 */
 
 /* 1. สไตล์สำหรับ Clinic_pic.png (top-pic) */
 .right-sidebar .top-pic { 
@@ -143,30 +143,9 @@ button:last-of-type { background: #4caf50; color: #fff; }
     margin-bottom: 0px; 
 }
 
-/* 2. สไตล์สำหรับ advice_table.jpg (advice-table-img) */
-.advice-table-img {
-    width: 100%; /* ขยายเต็มความกว้างของคอลัมน์ด้านขวา (43%) */
-    height: auto;
-    max-height: 450px; /* คงความสูงที่ขยายไว้ */
-    object-fit: contain;
-    
-    /* ❌ ลบคำสั่งจัดกึ่งกลางออก เพื่อให้กลับไปติดขอบซ้าย (ตำแหน่งเดิม) */
-    margin-top: 0px; 
-    margin-left: 0; /* 👈 ลบ margin: auto ออก */
-    margin-right: 0; /* 👈 ลบ margin: auto ออก */
-    
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: block; /* คงไว้ */
-}
 
-/* ❌ ลบสไตล์เดิมที่เกี่ยวข้องกับรูปภาพส่วนล่าง (.method-container) และส่วนท้าย (.advice-img) ออกทั้งหมด */
-/*
-.method-container { display: none; }
-.method-container img { display: none; }
-.advice-img { display: none; }
-*/
-
+/* ❌ ลบสไตล์เดิมที่เกี่ยวข้องกับรูปภาพส่วนล่าง (.method-container) ออกทั้งหมด */
+/* (ไม่ต้องมี .method-container, .method-container img อีกแล้ว) */
 
 /* ========================================================================= */
 /* --- 5. สไตล์ของกล่องข้อมูลสถานี (Report Cards) --- */
@@ -232,9 +211,23 @@ button:last-of-type { background: #4caf50; color: #fff; }
 }
 
 /* ========================================================================= */
-/* --- 6. ส่วนท้ายรายงาน (ตารางคำแนะนำ และ Footer) --- */
+/* --- 6. ส่วนท้ายรายงาน (Advice Table อิสระ และ Footer ติดขอบล่าง) --- */
 /* ========================================================================= */
-/* .advice-img สไตล์เดิมถูกลบออกจาก HTML แล้ว */
+
+/* 🌟 สไตล์ใหม่: สำหรับ Advice Table ที่เป็นอิสระ (อยู่ตรงกลางหน้ากระดาษ) 🌟 */
+.advice-img-standalone {
+    width: 90%; 
+    max-width: 800px; /* จำกัดความกว้างสูงสุด */
+    height: auto;
+    object-fit: contain;
+    
+    /* จัดกึ่งกลางแนวนอน */
+    margin: 20px auto 0 auto; /* เว้นระยะห่างด้านบน 20px และจัดกึ่งกลาง */
+    display: block; 
+    
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
 .a4 {
     /* พื้นหลังกระดาษ A4 */
@@ -249,6 +242,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     box-sizing: border-box;
     position: relative;
 }
+
 /* 🌟 สไตล์ใหม่: ลดขนาดตัวอักษรของข้อมูลติดต่อ และจัดให้อยู่ด้านล่างสุด 🌟 */
 #contactFooter {
     font-size: 14px !important; /* 🚨 ลดขนาดตัวอักษรลง */
@@ -291,10 +285,8 @@ button:last-of-type { background: #4caf50; color: #fff; }
     .stations, .right-sidebar {
         width: 100%;
     }
-    .right-sidebar { gap: 10px; margin-top: 15px; }
-    /* ลบสไตล์ที่เกี่ยวข้องกับ .method-container ใน Responsive Design */
-    /* .method-container { flex-direction: column; } */
-    /* .method-container img { width: 100%; } */
+    /* 🚨 แก้ไข Responsive: right-sidebar ไม่ควรมี gap */
+    .right-sidebar { gap: 0; margin-top: 15px; } 
 }
 </style>
 </head>
@@ -350,6 +342,8 @@ button:last-of-type { background: #4caf50; color: #fff; }
 
         <div id="trendSummary"></div> 
 
+       <div id="report" class="infographic a4" style="display:none;">
+        
         <div class="main-content">
             
             <div id="stations" class="stations">
@@ -357,17 +351,18 @@ button:last-of-type { background: #4caf50; color: #fff; }
 
             <div class="right-sidebar">
                 <img src="assets/Clinic_pic.png" alt="Clinic Pic" class="top-pic">
-                
-                <img src="assets/advice_table.jpg" alt="คำแนะนำสุขภาพ" class="advice-table-img">
             </div>
         </div>
-        
+
+        <img src="assets/advice_table.jpg" alt="คำแนะนำสุขภาพ" class="advice-img-standalone">
+
         <div id="report-footer-container">
-            <h3 id="contactFooter" style="margin-top: 16px; padding: 6px 10px; background: #e1bee7; border-radius: 6px;">
+            <h3 id="contactFooter" style="padding: 6px 10px; background: #e1bee7; border-radius: 6px;">
                 งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม กลุ่มงานอาชีวเวชกรรม<br>
                 โทร 038-684444 ต่อ 3106 เบอร์มือถือ 081-7810248
             </h3>
         </div>
+        
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -495,6 +490,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     </script>
 </body>
 </html>
+
 
 
 
