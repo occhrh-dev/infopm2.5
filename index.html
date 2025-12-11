@@ -193,15 +193,16 @@ h2 {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* --- 6. รูปภาพคำแนะนำ --- */
+/* --- 6. รูปภาพคำแนะนำ (Advice Image) --- */
 .advice-img {
-  width: 90%;           
+  width: 100%; /* ✅ ขยายให้เต็มความกว้าง */
+  max-width: 850px; 
   height: auto;
   margin: 15px auto;    
   border-radius: 10px;  
   box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
   display: block;       
-}
+}  
 
 /* --- 7. ส่วนกระดาษ A4 --- */
 .a4 {
@@ -216,20 +217,6 @@ h2 {
   box-sizing: border-box;
   position: relative;
 }
-
-.arrow-scale-svg {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 5px;
-  margin-top: 10px;
-}
-.arrow-svg {
-  width: 19%;
-  min-width: 100px;
-  height: auto;
-}
-
 button {
   padding: 10px 15px;
   margin-top: 10px;
@@ -274,7 +261,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     <label>พื้นที่: 
         <select id="areaSelector" onchange="toggleAreaInput()">
             <option value="">-- เลือกพื้นที่ --</option>
-            <option value="เขตเทศบาลนครมาบตาพุด">เขตเทศบาลนครมาบตาพุด</option>
+            <option value="ต.มาบตาพุด/ต.ห้วยโป่ง">ต.มาบตาพุด/ต.ห้วยโป่ง</option>
             <option value="manual">ระบุเอง</option>
         </select>
     </label><br><br>
@@ -299,74 +286,43 @@ button:last-of-type { background: #4caf50; color: #fff; }
     <button onclick="downloadImage()">📸 บันทึกเป็นภาพ</button> 
   </div>
 
-  <div id="report" class="infographic a4" style="display:none;">
+ <div id="report" class="infographic a4" style="display:none;">
     
     <div class="header-group">
-      <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-hrh">
-      <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-occ">
-      <div class="header-text">
-        งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม<br>
-        กลุ่มงานอาชีวเวชกรรม<br>
-        โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี ระยอง<br>
-        โทร 038-684444 ต่อ 3106 เบอร์มือถือ 081-7810248
-      </div>
+        <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-hrh">
+        <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-occ">
+        <div class="header-text">
+            โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ สยามบรมราชกุมารี ระยอง
+        </div>
     </div>
 
-    <h2>รายงานสถานการณ์ PM2.5</h2>
+    <h2>รายงานสถานการณ์ PM2<span style="font-size: 0.7em; vertical-align: sub;">.5</span></h2>
     
     <div id="areaValue"></div>
     <div id="dateValue"></div>
     <div id="timeValue"></div>
 
-    <div class="main-content">
-      
-      <div id="stations" class="stations"></div>
+    <div id="trendSummary"></div> 
 
- <div class="right-sidebar">
-<img src="assets/5medthod.png" class="method-img" style="margin-top: 300px;">
-<img src="assets/8medthod.png" class="method-img" style="margin-top: 225px;">
-</div>
+    <div class="main-content">
+        
+        <div id="stations" class="stations"></div>
+
+        <div class="right-sidebar">
+            <img src="assets/5medthod.png" class="method-img" style="margin-top: 300px;">
+            <img src="assets/8medthod.png" class="method-img" style="margin-top: 225px;">
+        </div>
     </div>
 
     <img src="assets/advice_table.jpg" alt="ตารางคำแนะนำ" class="advice-img">
-
-    <h3>ค่ามาตรฐานฝุ่นละออง PM2.5 (µg/m³)</h3>
-    <div class="arrow-scale-svg">
-      <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#2196f3"/>
-        <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">0 - 15.0</text>
-        <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">ดีมาก</text>
-      </svg>
     
-      <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#4caf50"/>
-        <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">15.1 - 25.0</text>
-        <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">ดี</text>
-      </svg>
+    <h3 style="margin-top: 20px; padding: 10px; background: #e1bee7; border-radius: 8px;">
+        งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม กลุ่มงานอาชีวเวชกรรม<br>
+        โทร 038-684444 ต่อ 3106 เบอร์มือถือ 081-7810248
+    </h3>
     
-      <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#ffeb3b"/>
-        <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">25.1 - 37.5</text>
-        <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">ปานกลาง</text>
-      </svg>
-    
-      <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#ff9800"/>
-        <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">37.6 - 75.0</text>
-        <text x="110" y="70" fill="#000000" font-size="16" font-weight="700" text-anchor="middle">เริ่มมีผลกระทบ</text>
-      </svg>
-    
-      <svg class="arrow-svg" viewBox="0 0 220 100" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="0,0 190,0 220,50 190,100 0,100" fill="#f44336"/>
-        <text x="110" y="40" fill="#000000" font-size="20" font-weight="700" text-anchor="middle">75.1 ขึ้นไป</text>
-        <text x="110" y="70" fill="#000000" font-size="18" font-weight="700" text-anchor="middle">มีผลต่อสุขภาพ</text>
-      </svg>
-    </div>
-
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
+</div> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     function toggleAreaInput() {
     const selector = document.getElementById("areaSelector");
@@ -433,7 +389,7 @@ function generateReport() {
           stationsHTML += `
             <div class="station ${level.class}">
               <div class="station-name">${name}</div>
-              <div class="pm-highlight">ค่า PM2.5: ${pm} µg/m³</div>
+              <div class="pm-highlight">ค่า PM2<span style="font-size: 0.7em; vertical-align: sub;">.5</span>: ${pm} µg/m³</div>
               <div class="emoji">${emoji}</div>
               <div class="level-highlight">ระดับ: ${levelText}</div>
             </div>`;
@@ -457,12 +413,3 @@ function generateReport() {
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
