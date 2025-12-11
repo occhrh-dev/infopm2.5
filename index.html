@@ -57,7 +57,7 @@ h2 {
 }
 
 .header-text {
-  margin-top: 10px; 
+  margin-top: 20px; 
   text-align: left;
   /* ✅ 2. ขยายขนาดตัวอักษรชื่อโรงพยาบาล */
   font-size: 23px; 
@@ -188,7 +188,7 @@ h2 {
 #timeValue::before { content: "⏰ "; font-size: 20px; }
 
 #areaValue, #dateValue, #timeValue {
-  font-size: 18px; /* ✅ ขยายขนาดฟอนต์ */
+  font-size: 22px; /* ✅ ขยายขนาดฟอนต์ */
   font-weight: bold;
   color: #4a148c;
   background: #e1bee7;
@@ -372,9 +372,9 @@ function setInitialValues() {
     document.getElementById("date").value = `${yyyy}-${mm}-${dd}`;
 }
     function getLevel(pm) {
-      if (pm <= 25) return {text:"ดีมาก 😊", class:"good"};
-      if (pm <= 37.5) return {text:"ดี 😐", class:"moderate"};
-      if (pm <= 50) return {text:"ปานกลาง 😟", class:"unhealthy"};
+      if (pm <= 25) return {text:"ดีมาก 😀", class:"good"};
+      if (pm <= 37.5) return {text:"ดี 🙂", class:"moderate"};
+      if (pm <= 50) return {text:"ปานกลาง 😐", class:"unhealthy"};
       if (pm <= 75) return {text:"เริ่มมีผลกระทบต่อสุขภาพ 😡", class:"very-unhealthy"};
       return {text:"มีผลกระทบต่อสุขภาพ 🤢", class:"hazardous"};
     }
@@ -425,7 +425,7 @@ function generateReport() {
           stationsHTML += `
             <div class="station ${level.class}">
               <div class="station-name">${name}</div>
-              <div class="pm-highlight">ค่า PM2<span style="font-size: 0.7em; vertical-align: sub;">.5</span>: ${pm} µg/m³</div>
+              <div class="pm-highlight">ค่า PM <span style="font-size: 0.7em; vertical-align: sub;">2.5</span>: ${pm} µg/m³</div>
               <div class="emoji">${emoji}</div>
               <div class="level-highlight">ระดับ: ${levelText}</div>
             </div>`;
@@ -449,7 +449,3 @@ function generateReport() {
   </script>
 </body>
 </html>
-
-
-
-
