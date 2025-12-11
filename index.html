@@ -2,9 +2,9 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>รายงานสถานการณ์ฝุ่น PM2.5</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 /* ========================================================================= */
 /* --- 1. การตั้งค่าพื้นฐานและส่วนประกอบหลัก --- */
@@ -24,7 +24,7 @@ body {
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.infographic {  
+.infographic { 
     text-align: center; /* จัดกึ่งกลางองค์ประกอบหลักในรายงาน */
 }
 
@@ -122,39 +122,41 @@ button:last-of-type { background: #4caf50; color: #fff; }
 }
 
 .right-sidebar {
-    /* คอลัมน์ด้านขวา (43% ของหน้า) */
     width: 43%; 
     display: flex; 
     flex-direction: column;
     justify-content: flex-start;
-    gap: 15px; /* รักษาระยะห่างระหว่างรูปภาพในคอลัมน์ขวา */
+    gap: 5px; 
 }
 
-/* 🌟🌟 สไตล์สำหรับรูปภาพในคอลัมน์ขวา 🌟🌟 */
-
-/* 1. สไตล์สำหรับ Clinic_pic.png (top-pic) */
+/* --- 4.1 รูปภาพส่วนบน (Clinic/PM Pic) --- */
 .right-sidebar .top-pic { 
-    width: 100%; /* ขยายเต็มความกว้างของคอลัมน์ */
+    width: 100%;
     height: auto;
-    max-height: 450px; /* จำกัดความสูงสูงสุดของภาพคลินิก */
-    object-fit: contain; /* ทำให้ภาพไม่ถูกบิดเบี้ยว */
     border-radius: 8px;
+    background: #ffffff;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    margin-bottom: 0px; 
+    margin-bottom: 5px;
 }
 
-/* 2. สไตล์สำหรับ advice_table.jpg (advice-table-img) */
-.advice-table-img {
-    width: 100%; /* ขยายเต็มความกว้างของคอลัมน์ด้านขวา */
+/* --- 4.2 รูปภาพส่วนล่าง (5/8 Methods) --- */
+.method-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.method-container img {
+    width: 48%; 
     height: auto;
-    max-height: 300px; /* จำกัดความสูงสูงสุดของตารางคำแนะนำ */
-    object-fit: contain;
-    margin-top: 0px; /* ใช้ gap ของ right-sidebar แทน */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: block; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4); 
+    background: #ffffff; 
+    border: 4px solid #f0f0f0; 
+    object-fit: contain;
 }
-
 
 /* ========================================================================= */
 /* --- 5. สไตล์ของกล่องข้อมูลสถานี (Report Cards) --- */
@@ -169,12 +171,12 @@ button:last-of-type { background: #4caf50; color: #fff; }
     box-sizing: border-box;
 }
 
-/* 🌟🌟 สีพื้นหลังของกล่องสถานีหลัก 🌟🌟 */
-.good { background: #2196f3; }       
-.moderate { background: #4caf50; }    
-.unhealthy { background: #ffeb3b; }   
-.very-unhealthy { background: #ff9800; } 
-.hazardous { background: #f44336; }  
+/* 🌟🌟 ส่วนที่ถูกเพิ่ม/แก้ไข: สีพื้นหลังของกล่องสถานีหลัก 🌟🌟 */
+.good { background: #2196f3; }       /* สีฟ้า */
+.moderate { background: #4caf50; }    /* สีเขียว */
+.unhealthy { background: #ffeb3b; }   /* สีเหลือง */
+.very-unhealthy { background: #ff9800; } /* สีส้ม */
+.hazardous { background: #f44336; }  /* สีแดง */
 /* ------------------------------------------------ */
 
 .station-name {
@@ -214,15 +216,23 @@ button:last-of-type { background: #4caf50; color: #fff; }
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     
     /* การเพิ่ม Contrast ให้ 'ปานกลาง' (สีเหลือง) */
-    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.3); 
-    -webkit-text-stroke: 0.5px #000000; 
-    text-stroke: 0.5px #000000;  
+    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.3); /* เงาจางๆ */
+    -webkit-text-stroke: 0.5px #000000; /* ขอบบางๆ */
+    text-stroke: 0.5px #000000; 
 }
 
 /* ========================================================================= */
 /* --- 6. ส่วนท้ายรายงาน (ตารางคำแนะนำ และ Footer) --- */
 /* ========================================================================= */
-/* 🚨 ลบสไตล์ advice-img เดิมออกไปทั้งหมด */
+.advice-img {
+    width: 100%; /* ขยายให้เต็มความกว้าง */
+    max-width: 850px; 
+    height: auto;
+    margin: 15px auto;    
+    border-radius: 10px;  
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    display: block;       
+}
 
 .a4 {
     /* พื้นหลังกระดาษ A4 */
@@ -263,124 +273,211 @@ button:last-of-type { background: #4caf50; color: #fff; }
         width: 100%;
     }
     .right-sidebar { gap: 10px; margin-top: 15px; }
+    .method-container { flex-direction: column; }
+    .method-container img { width: 100%; }
 }
 </style>
 </head>
 <body onload="setInitialValues()">
+
+  <div class="form-section">
+    <h2>กรอกข้อมูลสถานการณ์ฝุ่น PM2.5</h2>
     
-    <div class="form-section">
-        <label for="areaInput">พื้นที่:</label>
-        <input type="text" id="areaInput" value="หน่วยงานสาธารณสุขจังหวัดระยอง">
-        <label for="timeInput">เวลา:</label>
-        <input type="text" id="timeInput" value="10:00:00">
-        
-        <button onclick="updateValues()">อัปเดตข้อมูล</button>
-        <button onclick="downloadImage()">ดาวน์โหลดเป็นภาพ</button>
+    <label>พื้นที่: 
+        <select id="areaSelector" onchange="toggleAreaInput()">
+            <option value="">-- เลือกพื้นที่ --</option>
+            <option value="ต.มาบตาพุด/ต.ห้วยโป่ง">ต.มาบตาพุด/ต.ห้วยโป่ง</option>
+            <option value="manual">ระบุเอง</option>
+        </select>
+    </label><br><br>
+    
+    <div id="manualAreaContainer" style="display:none; margin-top: 5px;">
+        <label>ระบุพื้นที่อื่น: <input id="manualAreaInput" type="text" placeholder="พิมพ์ชื่อพื้นที่"></label>
+    </div>
+    <br>
+    <label>วันที่: <input id="date" type="date"></label><br><br>
+    <label>เวลา: 
+      ชั่วโมง <input id="hour" type="number" min="0" max="23" style="width:60px"> 
+      นาที <input id="minute" type="number" min="0" max="59" style="width:60px">
+    </label>
+
+    <h3>สถานีศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง</h3>
+    <label>ค่า PM2.5 : <input id="pm1" type="number" placeholder="ใส่ค่าตัวเลข"></label><br><br>
+
+    <h3>สถานีศูนย์ราชการ ต.มาบตาพุด</h3>
+    <label>ค่า PM2.5 : <input id="pm2" type="number" placeholder="ใส่ค่าตัวเลข"></label><br><br>
+
+    <button onclick="generateReport()">สร้างรายงาน</button> 
+    <button onclick="downloadImage()">📸 บันทึกเป็นภาพ</button> 
+  </div>
+
+  <div id="report" class="infographic a4" style="display:none;">
+    
+    <div class="header-group">
+      <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-hrh">
+      <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-occ">
+      <div class="header-text">
+        โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ<br>
+        สยามบรมราชกุมารี ระยอง
+      </div>
     </div>
 
-    <div id="infographic" class="infographic a4">
-        
-        <div class="header-group">
-            <img src="assets/hrh_logo.png" alt="HRH Logo" class="logo-hrh">
-            <div class="header-text">
-                รายงานสถานการณ์ฝุ่น PM 2.5<br>
-                กลุ่มงานอาชีวเวชกรรม โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดา ฯ สยามบรมราชกุมารี ระยอง
-            </div>
-            <img src="assets/OCC_logo.png" alt="OCC Logo" class="logo-occ">
-        </div>
+    <h2>รายงานสถานการณ์ฝุ่น PM <span style="font-size: 0.7em; vertical-align: sub;">2.5</span></h2>
+    
+    <div id="areaValue"></div>
+    <div id="dateValue"></div>
+    <div id="timeValue"></div>
 
-        <h2>รายงานสถานการณ์ฝุ่น PM 2.5</h2>
-        
-        <div style="margin-bottom: 15px;">
-            <div id="areaValue"></div>
-            <div id="dateValue"></div>
-            <div id="timeValue"></div>
-        </div>
+    <div id="trendSummary"></div> 
 
-        <div class="main-content">
+    <div class="main-content">
+      
+      <div id="stations" class="stations"></div>
+
+      <div class="right-sidebar">
+          <div class="top-pic-container" style="display: flex; justify-content: space-between; gap: 5px; width: 100%;">
+              <img src="assets/Clinic_pic.png" alt="Clinic Pic" class="top-pic" style="width: 49%;">
+              <img src="assets/PM_pic.png" alt="PM Pic" class="top-pic" style="width: 49%;">
+          </div>
+
+          <div class="method-container">
+              <img src="assets/5medthod.png" alt="5 วิธีป้องกัน" style="margin-top: 0px;">
+              <img src="assets/8medthod.png" alt="8 วิธีดูแลตนเอง" style="margin-top: 0px;">
+          </div>
+      </div>
+    </div>
+
+    <img src="assets/advice_table.jpg" alt="ตารางคำแนะนำ" class="advice-img">
+    
+    <h3 style="margin-top: 16px; padding: 10px; background: #e1bee7; border-radius: 8px;">
+        งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม กลุ่มงานอาชีวเวชกรรม<br>
+        โทร 038-684444 ต่อ 3106 เบอร์มือถือ 081-7810248
+    </h3>
+    
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    // --- 1. ฟังก์ชันตั้งค่าเริ่มต้น (Set Default Values) ---
+    function setInitialValues() {
+        // 1. พื้นที่: ตั้งค่า Drop-down
+        document.getElementById("areaSelector").value = "ต.มาบตาพุด/ต.ห้วยโป่ง";
+
+        // 2. เวลา: ตั้งค่าเป็น 08:00 น.
+        document.getElementById("hour").value = "08";
+        document.getElementById("minute").value = "00";
+
+        // 3. วันที่: ตั้งค่าเป็นวันนี้
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        
+        document.getElementById("date").value = `${yyyy}-${mm}-${dd}`;
+    }
+
+    // --- 2. ฟังก์ชันควบคุม Dropdown (ระบุเอง) ---
+    function toggleAreaInput() {
+        const selector = document.getElementById("areaSelector");
+        const container = document.getElementById("manualAreaContainer");
+        
+        if (selector.value === "manual") {
+            container.style.display = "block";
+        } else {
+            container.style.display = "none";
+            document.getElementById("manualAreaInput").value = ""; 
+        }
+    }
+
+    // --- 3. ฟังก์ชันกำหนดระดับ PM2.5 และสี (พร้อม Contrast สูงสุด) ---
+    function getLevel(pm) {
+        // กำหนดสีตัวอักษร (color) และสีพื้นหลัง (bgColor) 
+        if (pm <= 15) return {text:"ดีมาก 😃", class:"good", color: "#0D47A1", bgColor: "#E3F2FD"}; // สีฟ้าเข้ม/พื้นหลังฟ้าจาง
+        
+        if (pm <= 25) return {text:"ดี 🙂", class:"moderate", color: "#388E3C", bgColor: "#E8F5E9"}; // สีเขียวเข้ม/พื้นหลังเขียวจาง
+        
+        // ปานกลาง: ใช้ Text Stroke ใน CSS ช่วยเพิ่ม Contrast 
+        if (pm <= 37.5) return {text:"ปานกลาง 😐", class:"unhealthy", color: "#FFC107", bgColor: "#FFFDE7"}; 
+        
+        if (pm <= 75) return {text:"เริ่มมีผลกระทบต่อสุขภาพ 😫", class:"very-unhealthy", color: "#E65100", bgColor: "#FFF3E0"}; // สีส้มเข้ม/พื้นหลังส้มจาง
+        
+        return {text:"มีผลกระทบต่อสุขภาพ 😡", class:"hazardous", color: "#D32F2F", bgColor: "#FFEBEE"}; // สีแดงเข้ม/พื้นหลังแดงจาง
+    }
+
+    // --- 4. ฟังก์ชันหลัก: สร้างรายงาน ---
+    function generateReport() {
+        // ดึงค่าพื้นที่
+        let areaValue = document.getElementById("areaSelector").value;
+        if (areaValue === "manual") {
+            areaValue = document.getElementById("manualAreaInput").value;
+        }
+        document.getElementById("areaValue").innerText = "พื้นที่: " + areaValue;
+        
+        // ดึงค่าวันที่
+        const dateInput = document.getElementById("date").value;
+        if (dateInput) {
+            const dateObj = new Date(dateInput);
+            const days = ["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์"];
+            const months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
+                            "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
             
-            <div id="stations" class="stations">
-                </div>
+            const dayName = days[dateObj.getDay()];
+            const day = dateObj.getDate();
+            const monthName = months[dateObj.getMonth()];
+            const yearBE = dateObj.getFullYear() + 543;
 
-            <div class="right-sidebar">
-                <img src="assets/Clinic_pic.png" alt="Clinic Pic" class="top-pic">
-                
-                <img src="assets/advice_table.jpg" alt="คำแนะนำสุขภาพ" class="advice-table-img">
-            </div>
-        </div>
-        
-        </div>
+            document.getElementById("dateValue").innerText = `${dayName} ที่ ${day} ${monthName} ${yearBE}`;
+        }
 
-    <script>
-        // ข้อมูล PM2.5 (สามารถปรับเปลี่ยนได้)
-        const pmData = [
-            { name: "มาบตาพุด", pm: 47, update: "2025-12-11 09:00" },
-            { name: "บ้านฉาง", pm: 51, update: "2025-12-11 09:00" },
-            { name: "ศรีราชา", pm: 24, update: "2025-12-11 09:00" },
-            { name: "บางละมุง", pm: 35, update: "2025-12-11 09:00" }
+        // ดึงค่าเวลา
+        const hour = document.getElementById("hour").value;
+        const minute = document.getElementById("minute").value;
+        if (hour !== "" && minute !== "") {
+            document.getElementById("timeValue").innerText = `เวลา: ${hour.padStart(2,'0')}:${minute.padStart(2,'0')} น.`;
+        }
+
+        const stationNames = [
+            "จุดตรวจวัด:ศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง",
+            "จุดตรวจวัด:ศูนย์ราชการ ต.มาบตาพุด"
         ];
 
-        // ฟังก์ชันกำหนดเกณฑ์สีและระดับ PM2.5 (ห้ามลบ)
-        function getLevel(pm) {
-            if (pm <= 15) return { text: "ดีมาก 😃", class: "good", color: "#E3F2FD", bgColor: "#0D47A1" }; 
-            if (pm <= 25) return { text: "ดี 🙂", class: "moderate", color: "#E8F5E9", bgColor: "#388E3C" }; 
-            if (pm <= 37.5) return { text: "ปานกลาง 😐", class: "unhealthy", color: "#FFFDE7", bgColor: "#FFC107" }; 
-            if (pm <= 75) return { text: "เริ่มมีผลกระทบต่อสุขภาพ 😫", class: "very-unhealthy", color: "#FFF3E0", bgColor: "#E65100" }; 
-            return { text: "มีผลกระทบต่อสุขภาพ 😡", class: "hazardous", color: "#FFEBEE", bgColor: "#D32F2F" }; 
-        }
-
-        // ฟังก์ชันสร้างและแสดงผลรายงานสถานี
-        function generateReport() {
-            const stationsDiv = document.getElementById('stations');
-            stationsDiv.innerHTML = '';
+        let stationsHTML = "";
+        for (let i = 1; i <= 2; i++) {
+            let name = stationNames[i - 1];
+            let pm = parseFloat(document.getElementById("pm" + i).value);
             
-            pmData.forEach(station => {
-                const level = getLevel(station.pm);
-                const stationDiv = document.createElement('div');
+            if (!isNaN(pm)) {
+                let level = getLevel(pm);
                 
-                stationDiv.className = `station ${level.class}`;
-                stationDiv.innerHTML = `
-                    <div class="station-name">${station.name} (${station.update})</div>
-                    <div class="pm-highlight">PM2.5: ${station.pm} ไมโครกรัม/ลบ.ม.</div>
-                    <div class="level-highlight" style="background-color: ${level.bgColor}; color: ${level.color};">ระดับ: ${level.text}</div>
-                    <div class="emoji">${level.text.split(' ')[1]}</div>
-                `;
-                stationsDiv.appendChild(stationDiv);
-            });
+                const emoji = level.text.match(/[\u{1F600}-\u{1F64F}]/u)?.[0] || "";
+                const levelText = level.text.replace(emoji, "").trim();
+
+                stationsHTML += `
+                    <div class="station ${level.class}">
+                        <div class="station-name">${name}</div>
+                        <div class="pm-highlight">ค่า PM <span style="font-size: 0.7em; vertical-align: sub;">2.5</span>: ${pm} µg/m³</div>
+                        <div class="emoji">${emoji}</div>
+                        <div class="level-highlight" style="color: ${level.color}; background: ${level.bgColor};">ระดับ: ${levelText}</div>
+                    </div>`;
+            }
         }
 
-        // ฟังก์ชันอัปเดตค่าในรายงาน
-        function updateValues() {
-            document.getElementById('areaValue').innerHTML = document.getElementById('areaInput').value;
-            document.getElementById('timeValue').innerHTML = document.getElementById('timeInput').value;
-            // Date value is set on load
-            generateReport();
-        }
+        document.getElementById("stations").innerHTML = stationsHTML;
+        
+        document.getElementById("report").style.display = "block";
+    }
 
-        // ฟังก์ชันเริ่มต้นค่าเมื่อเปิดหน้าเว็บ
-        function setInitialValues() {
-            document.getElementById('dateValue').innerHTML = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
-            updateValues();
-        }
-
-        // ฟังก์ชันดาวน์โหลดรายงานเป็นรูปภาพ (ต้องการไลบรารี html2canvas)
-        function downloadImage() {
-            alert("ฟังก์ชันนี้ต้องใช้ไลบรารี html2canvas เพื่อทำงาน กรุณาเพิ่ม <script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script> ในส่วน <head> เพื่อเปิดใช้งาน");
-            
-            const element = document.getElementById('infographic'); 
-            
-            // หากเพิ่มไลบรารีแล้ว:
-            /*
-            html2canvas(element, { scale: 2 }).then(function(canvas) {
-                const link = document.createElement('a');
-                link.href = canvas.toDataURL('image/png');
-                link.download = 'PM25_Report_' + new Date().toISOString().slice(0, 10) + '.png';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            });
-            */
-        }
-    </script>
+    // --- 5. ฟังก์ชันบันทึกเป็นภาพ ---
+    function downloadImage() {
+        const report = document.getElementById("report");
+        html2canvas(report, { scale: 2 }).then(canvas => {
+            const link = document.createElement("a");
+            link.download = "pm25-report.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        });
+    }
+  </script>
 </body>
 </html>
