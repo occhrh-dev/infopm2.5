@@ -167,7 +167,7 @@ h2 {
 .level-highlight {
   font-size: 26px;
   font-weight: bold;
-  /* ❗ ลบ color: #b71c1c; ออก */
+  /* ❌ ลบบรรทัด color: ... ออกไปเลยครับ */
   background: #ffcdd2;
   padding: 10px;
   border-radius: 8px;
@@ -373,12 +373,13 @@ function setInitialValues() {
 }
  // ✅ แก้ไขฟังก์ชัน getLevel(pm) ทั้งหมด
 function getLevel(pm) {
-    // กำหนดสีตัวอักษร (color) และสีพื้นหลัง (bgColor) ให้ตรงกับระดับ
-    if (pm <= 25) return {text:"ดีมาก 😃", class:"good", color: "#000000", bgColor: "#90CAF9"}; // สีดำ/พื้นหลังฟ้าอ่อน
-    if (pm <= 37.5) return {text:"ดี 🙂", class:"moderate", color: "#000000", bgColor: "#A5D6A7"}; // สีดำ/พื้นหลังเขียวอ่อน
-    if (pm <= 50) return {text:"ปานกลาง 😐", class:"unhealthy", color: "#000000", bgColor: "#FFF59D"}; // สีดำ/พื้นหลังเหลืองอ่อน
-    if (pm <= 75) return {text:"เริ่มมีผลกระทบต่อสุขภาพ 😡", class:"very-unhealthy", color: "#ffffff", bgColor: "#FFB74D"}; // สีขาว/พื้นหลังส้มอ่อน
-    return {text:"มีผลกระทบต่อสุขภาพ 🤢", class:"hazardous", color: "#ffffff", bgColor: "#E57373"}; // สีขาว/พื้นหลังแดงอ่อน
+    //                                                              | ตัวอักษร
+    //                                                              | (ตามสีระดับ)
+    if (pm <= 25) return {text:"ดีมาก 😃", class:"good", color: "#2196F3", bgColor: "#BBDEFB"}; // สีฟ้า
+    if (pm <= 37.5) return {text:"ดี 🙂", class:"moderate", color: "#4CAF50", bgColor: "#C8E6C9"}; // สีเขียว
+    if (pm <= 50) return {text:"ปานกลาง 😐", class:"unhealthy", color: "#FFEB3B", bgColor: "#FFF9C4"}; // สีเหลือง
+    if (pm <= 75) return {text:"เริ่มมีผลกระทบต่อสุขภาพ 😡", class:"very-unhealthy", color: "#FF9800", bgColor: "#FFCC80"}; // สีส้ม
+    return {text:"มีผลกระทบต่อสุขภาพ 🤢", class:"hazardous", color: "#F44336", bgColor: "#FF8A80"}; // สีแดง
 }
 function generateReport() {
     let areaValue = document.getElementById("areaSelector").value;
@@ -451,5 +452,6 @@ function generateReport() {
   </script>
 </body>
 </html>
+
 
 
