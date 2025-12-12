@@ -79,17 +79,21 @@ button:last-of-type { background: #4caf50; color: #fff; }
     text-align: left;
     font-size: 23px; /* ขยายขนาดตัวอักษรชื่อโรงพยาบาล */
     font-weight: bold;
-    color: #000000;
-    line-height: 1.3;
-    max-width: 550px; 
-   /*text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;*/
-   /* ตัวอย่างการใช้ */
-   /* text-shadow: 0.5px 0.5px 0 #FFFFFF, ... ; */
-    -webkit-text-stroke: 0.5px #FFFFFF;
-    white-space: nowrap; 
+   .header-text {
+    /* ... ค่าเดิม ... */
+    color: #000000; /* หรือสีม่วง #7b1fa2 ตามที่ชอบ */
+    
+    /* เทคนิคซ้อนเงา 2 ชั้น: */
+    /* ชั้นที่ 1: สร้างขอบขาวหนาๆ รอบตัวหนังสือ */
+    /* ชั้นที่ 2: สร้างเงาดำจางๆ ด้านหลังสุด เพื่อดันให้ขาวมันลอยเด่น */
+    text-shadow: 
+        /* ขอบขาว (White Stroke) */
+        2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff,
+        1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+        
+        /* เงาดำ (Drop Shadow) - ตัวช่วยสำคัญ! */
+        3px 3px 4px rgba(0,0,0,0.4);
 }
-
-
 /* ========================================================================= */
 /* --- 3. ส่วนแสดงข้อมูล (พื้นที่/วันที่/เวลา) --- */
 /* ========================================================================= */
@@ -508,6 +512,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     </script>
 </body>
 </html>
+
 
 
 
