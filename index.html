@@ -36,7 +36,7 @@ h2 {
     padding: 10px;
     border-radius: 8px;
     margin-top: -10px;
-    margin-bottom: -2px;
+    margin-bottom: -1px;
 }
 
 button {
@@ -68,7 +68,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
 }
 
 .logo-occ {
-    height: 130px;
+    height: 140px;
     width: auto;
 }
 
@@ -376,7 +376,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
         <div id="report-footer-container">
             <h3 id="contactFooter" style="padding: 6px 10px; background: #e1bee7; border-radius: 6px;">
                 งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม กลุ่มงานอาชีวเวชกรรม<br>
-                โทร 038-684444 ต่อ 3106 เบอร์มือถือ 081-7810248
+                โทร 038-684444 ต่อ 3106 เบอร์มือถือ 081-7814248
             </h3>
         </div>
         
@@ -461,8 +461,8 @@ button:last-of-type { background: #4caf50; color: #fff; }
             }
 
             const stationNames = [
-                "จุดตรวจวัด:ศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง",
-                "จุดตรวจวัด:ศูนย์ราชการ ต.เนินพระ"
+                "จุดตรวจวัด: ศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง",
+                "จุดตรวจวัด: ศูนย์ราชการ ต.เนินพระ"
             ];
 
             let stationsHTML = "";
@@ -479,7 +479,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
                     stationsHTML += `
                         <div class="station ${level.class}">
                             <div class="station-name">${name}</div>
-                            <div class="pm-highlight">ค่า PM <span style="font-size: 0.7em; vertical-align: sub;">2.5</span>: ${pm} µg/m³</div>
+                            <div class="pm-highlight">ค่า PM <span style="font-size: 0.7em; vertical-align: sub;">2.5</span> : ${pm} µg/m³</div>
                             <div class="emoji">${emoji}</div>
                             <div class="level-highlight" style="color: ${level.color}; background: ${level.bgColor};">ระดับ: ${levelText}</div>
                         </div>`;
@@ -504,6 +504,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     </script>
 </body>
 </html>
+
 
 
 
