@@ -2,209 +2,255 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>รายงานสถานการณ์ฝุ่น PM2.5 (WAQI API)</title>
+    <title>รายงานสถานการณ์ฝุ่น PM2.5</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
 /* ========================================================================= */
-/* --- 1. CSS หลักและการตกแต่ง --- */
+/* --- 1. การตั้งค่าพื้นฐานและส่วนประกอบหลัก --- */
 /* ========================================================================= */
 body {
     font-family: 'Sarabun', sans-serif;
-    background: #e0e0e0;
+    background: #f5f5f5;
     margin: 0;
     padding: 20px;
 }
 
-/* กล่องกรอกข้อมูล (Control Panel) */
 .form-section {
     background: #fff;
-    padding: 20px;
-    border-radius: 12px;
+    padding: 15px;
+    border-radius: 8px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .infographic {  
-    text-align: center; 
+    text-align: center; /* จัดกึ่งกลางองค์ประกอบหลักในรายงาน */
 }
 
-/* หัวข้อสีรุ้ง */
 h2 {
+    /* หัวข้อหลัก (แถบสีรุ้ง) */
     background: linear-gradient(90deg, #4caf50, #ffeb3b, #ff9800, #f44336, #9c27b0);
     color: #000;
-    font-size: 46px;
+    font-size: 46px; /* ขยายขนาดหัวข้อ */
     padding: 10px;
     border-radius: 8px;
     margin-top: -15px;
     margin-bottom: -1px;
 }
 
-/* ปุ่มต่างๆ */
 button {
-    padding: 12px 20px;
+    padding: 10px 15px;
     margin-top: 10px;
-    margin-right: 5px;
     cursor: pointer;
     border: none;
     border-radius: 6px;
     font-size: 16px;
-    font-weight: bold;
-    transition: all 0.2s;
 }
-button:hover { transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-
-.btn-gen { background: #2196f3; color: #fff; }    /* สร้างรายงาน */
-.btn-save { background: #4caf50; color: #fff; }   /* บันทึกภาพ */
-.btn-api { background: #ff9800; color: #fff; }    /* ดึง API */
+button:first-of-type { background: #2196f3; color: #fff; }
+button:last-of-type { background: #4caf50; color: #fff; }
 
 /* ========================================================================= */
-/* --- 2. ส่วนประกอบในรายงาน (A4) --- */
+/* --- 2. ส่วนหัวกระดาษและโลโก้ --- */
 /* ========================================================================= */
 .header-group {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 10px;
+    gap: 4px;
     margin-top: -30px;
     margin-bottom: -40px;
 }
 
-.logo-hrh { height: 90px; width: auto; }
-.logo-occ { height: 138px; width: auto; margin-top: -6px; }
+.logo-hrh {
+    height: 90px;
+    width: auto;
+}
+
+.logo-occ {
+    height: 138px;
+    width: auto;
+    margin-top: -6px;
+}
 
 .header-text {
+    /* ชื่อโรงพยาบาล */
     margin-top: 20px;  
     text-align: left;
-    font-size: 23px;
+    font-size: 23px; /* ขยายขนาดตัวอักษรชื่อโรงพยาบาล */
     font-weight: bold;
     color: #4a148c;
     line-height: 1.3;
     max-width: 550px; 
-    text-shadow: 1px 1px 0 #fff;
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     white-space: nowrap; 
 }
 
-/* ป้ายข้อมูล พื้นที่/วันที่/เวลา */
-#areaValue::before { content: "📍 "; }
-#dateValue::before { content: "📅 "; }
-#timeValue::before { content: "⏰ "; }
+
+/* ========================================================================= */
+/* --- 3. ส่วนแสดงข้อมูล (พื้นที่/วันที่/เวลา) --- */
+/* ========================================================================= */
+#areaValue::before { content: "📍 "; font-size: 24px; }
+#dateValue::before { content: "📅 "; font-size: 24px; }
+#timeValue::before { content: "⏰ "; font-size: 24px; }
 
 #areaValue, #dateValue, #timeValue {
-    font-size: 26px;
+    font-size: 26px; /* ขยายขนาดฟอนต์ของข้อมูลหลัก */
     font-weight: bold;
     color: #4a148c;
     background: #e1bee7;
     padding: 6px 12px;
     border-radius: 6px;
-    margin: 4px;
+    margin-bottom: 4px;
     display: inline-block;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Layout 2 คอลัมน์ */
+/* ========================================================================= */
+/* --- 4. โครงสร้างเนื้อหาหลัก (2 คอลัมน์: สถานี + รูปภาพ) --- */
+/* ========================================================================= */
 .main-content {
     display: flex;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: stretch; /* ทำให้คอลัมน์ขวาสูงเท่าคอลัมน์ซ้าย */
     margin-top: 5px;
+    margin-bottom: 0px; /* 👈 เพิ่ม: ลดระยะห่างด้านล่าง */
     gap: 15px;
 }
 
-.stations { width: 55%; display: flex; flex-direction: column; }
-.right-sidebar { width: 43%; display: flex; flex-direction: column; gap: 0; }
+.stations {
+    width: 55%; 
+    display: flex; 
+    flex-direction: column;
+}
 
+.right-sidebar {
+    /* คอลัมน์ด้านขวา (43% ของหน้า) */
+    width: 43%; 
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0; /* ลบ gap ทิ้ง เพราะเหลือแค่ Clinic_pic.png รูปเดียวในคอลัมน์ขวา */
+}
+
+/* 🌟🌟 สไตล์สำหรับรูปภาพในคอลัมน์ขวา (เหลือแค่ Clinic_pic.png) 🌟🌟 */
+
+/* 1. สไตล์สำหรับ Clinic_pic.png (top-pic) */
 .right-sidebar .top-pic { 
-    width: 100%;
-    max-height: 450px;
-    object-fit: contain;
+    width: 100%; /* ขยายเต็มความกว้างของคอลัมน์ */
+    height: auto;
+    max-height: 450px; /* จำกัดความสูงสูงสุดของภาพคลินิก */
+    object-fit: contain; /* ทำให้ภาพไม่ถูกบิดเบี้ยว */
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 0px; 
 }
 
-/* การ์ดแสดงค่าฝุ่น */
+
+/* ========================================================================= */
+/* --- 5. สไตล์ของกล่องข้อมูลสถานี (Report Cards) --- */
+/* ========================================================================= */
 .station {
     margin: 0 0 15px 0;
-    padding: 15px;
+    padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    color: #fff; /* Default text white */
+    color: #fff;
     width: 100%; 
     box-sizing: border-box;
-    position: relative;
 }
 
-/* สีพื้นหลังตามระดับความรุนแรง (เกณฑ์ใหม่) */
-.good { background: #2196f3; color: #fff; }       /* ฟ้า */
-.moderate { background: #4caf50; color: #fff; }    /* เขียว */
-.unhealthy { background: #ffeb3b; color: #000; }   /* เหลือง (ตัวหนังสือดำ) */
-.very-unhealthy { background: #ff9800; color: #fff; } /* ส้ม */
-.hazardous { background: #f44336; color: #fff; }   /* แดง */
+/* 🌟🌟 สีพื้นหลังของกล่องสถานีหลัก 🌟🌟 */
+.good { background: #2196f3; }       
+.moderate { background: #4caf50; }    
+.unhealthy { background: #ffeb3b; }   
+.very-unhealthy { background: #ff9800; } 
+.hazardous { background: #f44336; }  
+/* ------------------------------------------------ */
 
 .station-name {
-    font-size: 22px;
+    font-size: 20px;
+    color: #000;
     font-weight: bold;
     margin-bottom: 5px;
-    color: inherit; /* ตามสีแม่ */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
 }
 
 .pm-highlight {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
     color: #0d47a1;
-    background: rgba(255,255,255,0.8);
+    background: #bbdefb;
     padding: 10px;
     border-radius: 8px;
-    margin: 8px 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 6px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .emoji {
-    font-size: 40px;
-    margin: 5px 0;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    font-size: 32px;
+    line-height: 1.2;
+    margin: 6px 0;
+    text-align: center;
 }
 
+/* --- 5.1 สไตล์กล่อง 'ระดับ:' (สำหรับปรับ Contrast) --- */
 .level-highlight {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
-    background: rgba(255,255,255,0.9);
-    padding: 8px;
+    background: #ffcdd2; /* จะถูกแทนที่ด้วย BG Color จาก JS */
+    padding: 10px;
     border-radius: 8px;
-    margin-top: 5px;
-    color: #333;
-    border: 2px solid rgba(0,0,0,0.1);
+    margin: 6px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    
+    /* การเพิ่ม Contrast ให้ 'ปานกลาง' (สีเหลือง) */
+    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.3); 
+    -webkit-text-stroke: 0.5px #000000; 
+    text-stroke: 0.5px #000000;  
 }
 
-/* รูปภาพคำแนะนำ */
+/* ========================================================================= */
+/* --- 6. ส่วนท้ายรายงาน (Advice Table อิสระ และ Footer ติดขอบล่าง) --- */
+/* ========================================================================= */
+
+/* 🌟 1. สไตล์สำหรับ 5medthod.png (ขยับขึ้นไปหน่อย) 🌟 */
 .advice-img-standalone {
     width: 90%; 
-    max-width: 800px;
-    margin: -5px auto 0 auto; 
+    max-width: 800px; /* จำกัดความกว้างสูงสุด */
+    height: auto;
+    object-fit: contain;
+    
+    /* 🚨 ขยับขึ้น: ลดระยะห่างด้านบนเหลือ 10px (จากเดิม 20px) */
+    margin: -10px auto 0 auto; 
     display: block; 
+    
+    border-radius: 0px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/* 🌟 2. สไตล์สำหรับ advice_table.jpg (คลาสใหม่) 🌟 */
 .advice-table-img-fixed {
     width: 100%; 
+    /* 🚨 ขยายขนาด: เพิ่ม max-width ให้ใหญ่กว่า (เช่น 900px) */
     max-width: 900px; 
-    max-height: 350px;
+    height: auto;
     object-fit: contain;
-    margin: -15px auto 0 auto; 
+    /* 🚨 ลดความสูง: ปรับค่า max-height ลงเหลือ 350px */
+    max-height: 350px; /* 👈 สามารถปรับค่านี้นายป๊อป หากยังสูงไป */
+    /* 🚨 ชิดกัน: ลดระยะห่างด้านบนให้เหลือ 5px (เกือบชิด) */
+    margin: -20px auto 0 auto; 
     display: block; 
+    
+    border-radius: 0px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* หน้ากระดาษ A4 */
 .a4 {
+    /* พื้นหลังกระดาษ A4 */
     width: 210mm;
     min-height: 297mm;
-    background-image: url('assets/bg_pm25.jpg'); /* พื้นหลัง */
+    background-image: url('assets/bg_pm25.jpg');
     background-size: cover;
     background-position: center bottom;
     background-repeat: no-repeat;
@@ -212,92 +258,94 @@ button:hover { transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.2
     padding: 10mm;
     box-sizing: border-box;
     position: relative;
-    background-color: white; /* Fallback */
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
-/* Footer ติดขอบล่าง */
+/* 🌟 สไตล์ใหม่: ลดขนาดตัวอักษรของข้อมูลติดต่อ และจัดให้อยู่ด้านล่างสุด 🌟 */
+#contactFooter {
+    font-size: 12px !important; /* 🚨 ลดขนาดตัวอักษรลง */
+    font-weight: normal; /* ทำให้ดูไม่หนาเท่าหัวข้อหลัก */
+    margin: 0 !important; /* ลบ margin เดิมออก */
+    line-height: 1.4;
+    padding: 2px 4px !important;
+}
+
+/* 🚨 สไตล์สำหรับควบคุมตำแหน่งให้อยู่ติดขอบล่าง */
 #report-footer-container {
-    position: absolute;
-    bottom: 5mm;
-    left: 2mm;
-    right: 2mm;
+    position: absolute; /* กำหนดตำแหน่งสัมบูรณ์ */
+    bottom: 0mm; /* ให้อยู่เหนือขอบล่าง 10mm (เท่ากับ padding ของ .a4) */
+    margin-top: auto;/* 🚨 เพิ่ม: margin-top: auto เพื่อให้ผลักตัวเองลงไปล่างสุด */
+    left: 2mm; /* ให้อยู่ติดขอบซ้าย 10mm */
+    right: 2mm; /* ให้อยู่ติดขอบขวา 10mm */
+    width: auto; /* ให้ขยายเต็มพื้นที่ระหว่าง left/right */
     text-align: center;
 }
-#contactFooter {
-    font-size: 14px;
-    font-weight: normal;
-    background: rgba(255,255,255,0.9);
-    padding: 5px 15px;
-    border-radius: 20px;
-    display: inline-block;
-    border: 1px solid #ddd;
-}
-
-/* Responsive มือถือ */
+/* ========================================================================= */
+/* --- 7. Responsive Design (สำหรับมือถือ) --- */
+/* ========================================================================= */
 @media (max-width: 600px) {
-    .a4 { width: 100%; height: auto; padding: 10px; }
-    .header-group { flex-direction: column; align-items: center; }
-    .main-content { flex-direction: column; }
-    .stations, .right-sidebar { width: 100%; }
+    .station { font-size: 14px; }
+    h2 { font-size: 18px; }
+    
+    .header-group {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .header-text {
+        text-align: center;
+        margin-top: 10px;
+        white-space: normal; 
+    }
+    
+    .main-content, .right-sidebar {
+        flex-direction: column; 
+    }
+    .stations, .right-sidebar {
+        width: 100%;
+    }
+    /* 🚨 แก้ไข Responsive: right-sidebar ไม่ควรมี gap */
+    .right-sidebar { gap: 0; margin-top: 15px; } 
 }
 </style>
 </head>
-
 <body onload="setInitialValues()">
     
     <div class="form-section">
-        <h2 style="font-size: 28px; background: none; color: #333; padding: 0;">🛠️ เครื่องมือสร้างรายงาน</h2>
-        <hr>
+        <h2>กรอกข้อมูลสถานการณ์ฝุ่น PM2.5</h2>
         
-        <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-            <strong>🚀 โหลดข้อมูลอัตโนมัติ (WAQI API):</strong><br>
-            <button onclick="fetchWaqiData()" class="btn-api">🔄 ดึงข้อมูลจาก WAQI</button>
-            <span id="api-status" style="font-size: 14px; color: #666; margin-left: 10px;"></span>
-        </div>
+        <label>พื้นที่: 
+            <select id="areaSelector" onchange="toggleAreaInput()">
+                <option value="">-- เลือกพื้นที่ --</option>
+                <option value="ต.มาบตาพุด/ต.ห้วยโป่ง">ต.มาบตาพุด/ต.ห้วยโป่ง</option>
+                <option value="manual">ระบุเอง</option>
+            </select>
+        </label><br><br>
         
-        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-            <div>
-                <label>พื้นที่:</label> 
-                <select id="areaSelector" style="padding: 5px;">
-                    <option value="ต.มาบตาพุด/ต.ห้วยโป่ง">ต.มาบตาพุด/ต.ห้วยโป่ง</option>
-                    <option value="manual">ระบุเอง...</option>
-                </select>
-                <input id="manualAreaInput" type="text" placeholder="พิมพ์ชื่อพื้นที่" style="display:none; margin-top:5px;">
-            </div>
-            <div>
-                <label>วันที่:</label> <input id="date" type="date" style="padding: 5px;">
-            </div>
-            <div>
-                <label>เวลา:</label> 
-                <input id="hour" type="number" min="0" max="23" style="width:50px; padding: 5px;"> : 
-                <input id="minute" type="number" min="0" max="59" style="width:50px; padding: 5px;"> น.
-            </div>
+        <div id="manualAreaContainer" style="display:none; margin-top: 5px;">
+            <label>ระบุพื้นที่อื่น: <input id="manualAreaInput" type="text" placeholder="พิมพ์ชื่อพื้นที่"></label>
         </div>
         <br>
+        <label>วันที่: <input id="date" type="date"></label><br><br>
+        <label>เวลา: 
+          ชั่วโมง <input id="hour" type="number" min="0" max="23" style="width:60px"> 
+          นาที <input id="minute" type="number" min="0" max="59" style="width:60px">
+        </label>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div style="background: #f9f9f9; padding: 10px; border-radius: 8px;">
-                <h3 style="margin: 0 0 10px 0;">📍 สถานี 1: ศูนย์วิจัยพืชไร่ (ห้วยโป่ง)</h3>
-                <label>ค่า PM2.5 (µg/m³):</label>
-                <input id="pm1" type="number" step="0.1" placeholder="รอตัวเลข..." style="font-size: 18px; width: 100px; padding: 5px;">
-            </div>
-            <div style="background: #f9f9f9; padding: 10px; border-radius: 8px;">
-                <h3 style="margin: 0 0 10px 0;">📍 สถานี 2: ศูนย์ราชการ (เนินพระ)</h3>
-                <label>ค่า PM2.5 (µg/m³):</label>
-                <input id="pm2" type="number" step="0.1" placeholder="รอตัวเลข..." style="font-size: 18px; width: 100px; padding: 5px;">
-            </div>
-        </div>
+        <h3>สถานีศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง</h3>
+        <label>ค่า PM2.5 : <input id="pm1" type="number" placeholder="ใส่ค่าตัวเลข"></label><br><br>
 
-        <div style="margin-top: 20px; text-align: center;">
-            <button onclick="generateReport()" class="btn-gen">📝 สร้างรายงาน</button> 
-            <button onclick="downloadImage()" class="btn-save">📸 บันทึกเป็นภาพ</button> 
-        </div>
+        <h3>สถานีศูนย์ราชการ ต.เนินพระ</h3>
+        <label>ค่า PM2.5 : <input id="pm2" type="number" placeholder="ใส่ค่าตัวเลข"></label><br><br>
+
+        <button onclick="generateReport()">สร้างรายงาน</button> 
+        <button onclick="downloadImage()">📸 บันทึกเป็นภาพ</button> 
     </div>
 
-   <div id="report" class="infographic a4" style="display:none;"> <div class="header-group">
-            <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-hrh" onerror="this.style.display='none'">
-            <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-occ" onerror="this.style.display='none'">
+   <div id="report" class="infographic a4" style="display:none;">
+        
+        <div class="header-group">
+            <img src="assets/logo.hrh.png" alt="Logo HRH" class="logo-hrh">
+            <img src="assets/logo.occ.png" alt="Logo OCC" class="logo-occ">
             <div class="header-text">
                 โรงพยาบาลเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดาฯ<br>
                 สยามบรมราชกุมารี ระยอง
@@ -310,187 +358,146 @@ button:hover { transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,0,0,0.2
         <div id="dateValue"></div>
         <div id="timeValue"></div>
 
+        <div id="trendSummary"></div> 
+
         <div class="main-content">
-            <div id="stations" class="stations"></div>
+            
+            <div id="stations" class="stations">
+                </div>
 
             <div class="right-sidebar">
-                <img src="assets/Clinic_pic.png" alt="Clinic Pic" class="top-pic" onerror="this.style.display='none'">
+                <img src="assets/Clinic_pic.png" alt="Clinic Pic" class="top-pic">
             </div>
         </div>
         
-        <img src="assets/5medthod.png" alt="5 วิธีป้องกัน" class="advice-img-standalone" onerror="this.style.display='none'">
-        <img src="assets/advice_table.jpg" alt="ตารางคำแนะนำ" class="advice-table-img-fixed" onerror="this.style.display='none'">
+        <img src="assets/5medthod.png" alt="5 วิธีป้องกัน PM2.5" class="advice-img-standalone">
+        
+        <img src="assets/advice_table.jpg" alt="คำแนะนำสุขภาพ" class="advice-table-img-fixed">
 
         <div id="report-footer-container">
-            <h3 id="contactFooter">
+            <h3 id="contactFooter" style="padding: 6px 10px; background: #e1bee7; border-radius: 6px;">
                 งานพิษวิทยา และเวชศาสตร์สิ่งแวดล้อม กลุ่มงานอาชีวเวชกรรม<br>
                 โทร 038-684444 ต่อ 3106 เบอร์มือถือ 081-7814248
             </h3>
         </div>
         
-    </div> 
-
+    </div> <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
-        // --- CONFIG: ตั้งค่า Token WAQI ที่นี่ ---
-        const WAQI_TOKEN = 'c4f89be58184bd61e1adebd1d49c6a43f3321ca9'; 
-
-        // 1. ตั้งค่าเริ่มต้น
+        // --- 1. ฟังก์ชันตั้งค่าเริ่มต้น (Set Default Values) ---
         function setInitialValues() {
-            setNow();
-            // เช็คว่าเลือก Manual Area หรือไม่
-            document.getElementById("areaSelector").addEventListener('change', function() {
-                const manualInput = document.getElementById("manualAreaInput");
-                if (this.value === "manual") {
-                    manualInput.style.display = "block";
-                    manualInput.focus();
-                } else {
-                    manualInput.style.display = "none";
-                }
-            });
-        }
-        
-        function setNow() {
+            // 1. พื้นที่: ตั้งค่า Drop-down
+            document.getElementById("areaSelector").value = "ต.มาบตาพุด/ต.ห้วยโป่ง";
+
+            // 2. เวลา: ตั้งค่าเป็น 08:00 น.
+            document.getElementById("hour").value = "08";
+            document.getElementById("minute").value = "00";
+
+            // 3. วันที่: ตั้งค่าเป็นวันนี้
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
+            
             document.getElementById("date").value = `${yyyy}-${mm}-${dd}`;
-            document.getElementById("hour").value = String(today.getHours()).padStart(2, '0');
-            document.getElementById("minute").value = String(today.getMinutes()).padStart(2, '0');
         }
 
-        // 2. ระบบดึง API (WAQI)
-        async function fetchWaqiData() {
-            const btn = document.querySelector('.btn-api');
-            const statusSpan = document.getElementById('api-status');
-            const originalText = btn.innerText;
+        // --- 2. ฟังก์ชันควบคุม Dropdown (ระบุเอง) ---
+        function toggleAreaInput() {
+            const selector = document.getElementById("areaSelector");
+            const container = document.getElementById("manualAreaContainer");
             
-            btn.innerText = "⏳ กำลังเชื่อมต่อ...";
-            btn.disabled = true;
-            statusSpan.innerText = "";
-
-            try {
-                // ฟังก์ชันย่อยดึงข้อมูลแต่ละสถานี
-                async function getStation(id) {
-                    const res = await fetch(`https://api.waqi.info/feed/${id}/?token=${WAQI_TOKEN}`);
-                    const json = await res.json();
-                    if (json.status === 'ok') {
-                        // **สำคัญ** ดึงค่า PM2.5 (iaqi.pm25.v) เพื่อให้ได้หน่วย µg/m³
-                        // ถ้าไม่มีให้ลองดูค่า AQI (แต่ค่า AQI จะสูงกว่า PM2.5 จริง)
-                        if (json.data.iaqi && json.data.iaqi.pm25) {
-                            return json.data.iaqi.pm25.v;
-                        } else {
-                            // ถ้าไม่มี PM2.5 ให้คืนค่า AQI แต่ต้องระวังเรื่องสี
-                            return json.data.aqi; 
-                        }
-                    }
-                    return null;
-                }
-
-                // ดึงข้อมูล 2 สถานีพร้อมกัน
-                // @5819 = ศูนย์วิจัยพืชไร่ระยอง (ห้วยโป่ง)
-                // @10502 = ศูนย์ราชการจังหวัดระยอง
-                const [val1, val2] = await Promise.all([
-                    getStation('@5819'),
-                    getStation('@10502')
-                ]);
-
-                let log = "ผลการดึงข้อมูล:\n";
-
-                if (val1 !== null) {
-                    document.getElementById('pm1').value = val1;
-                    log += "✅ ห้วยโป่ง: " + val1 + "\n";
-                } else {
-                    log += "⚠️ ห้วยโป่ง: ไม่พบข้อมูล\n";
-                }
-
-                if (val2 !== null) {
-                    document.getElementById('pm2').value = val2;
-                    log += "✅ ศูนย์ราชการ: " + val2 + "\n";
-                } else {
-                    log += "⚠️ ศูนย์ราชการ: ไม่พบข้อมูล\n";
-                }
-
-                setNow(); // อัปเดตเวลาด้วย
-                alert(log);
-
-            } catch (err) {
-                console.error(err);
-                alert("เกิดข้อผิดพลาด: " + err.message);
-            } finally {
-                btn.innerText = originalText;
-                btn.disabled = false;
+            if (selector.value === "manual") {
+                container.style.display = "block";
+            } else {
+                container.style.display = "none";
+                document.getElementById("manualAreaInput").value = ""; 
             }
         }
 
-        // 3. คำนวณสีและระดับ (เกณฑ์ PM2.5 ไทย ใหม่ 2023)
+        // --- 3. ฟังก์ชันกำหนดระดับ PM2.5 และสี (พร้อม Contrast สูงสุด) ---
         function getLevel(pm) {
-            // เกณฑ์: 0-15 (ฟ้า), 15.1-25 (เขียว), 25.1-37.5 (เหลือง), 37.6-75 (ส้ม), >75 (แดง)
-            if (pm <= 15) return {text:"ดีมาก 😃", class:"good"};
-            if (pm <= 25) return {text:"ดี 🙂", class:"moderate"};
-            if (pm <= 37.5) return {text:"ปานกลาง 😐", class:"unhealthy"};
-            if (pm <= 75) return {text:"เริ่มมีผลกระทบต่อสุขภาพ 😫", class:"very-unhealthy"};
-            return {text:"มีผลกระทบต่อสุขภาพ 😡", class:"hazardous"};
+            // กำหนดสีตัวอักษร (color) และสีพื้นหลัง (bgColor) 
+            if (pm <= 15) return {text:"ดีมาก 😃", class:"good", color: "#0D47A1", bgColor: "#E3F2FD"}; // สีฟ้าเข้ม/พื้นหลังฟ้าจาง
+            
+            if (pm <= 25) return {text:"ดี 🙂", class:"moderate", color: "#388E3C", bgColor: "#E8F5E9"}; // สีเขียวเข้ม/พื้นหลังเขียวจาง
+            
+            // ปานกลาง: ใช้ Text Stroke ใน CSS ช่วยเพิ่ม Contrast 
+            if (pm <= 37.5) return {text:"ปานกลาง 😐", class:"unhealthy", color: "#FFC107", bgColor: "#FFFDE7"}; 
+            
+            if (pm <= 75) return {text:"เริ่มมีผลกระทบต่อสุขภาพ 😫", class:"very-unhealthy", color: "#E65100", bgColor: "#FFF3E0"}; // สีส้มเข้ม/พื้นหลังส้มจาง
+            
+            return {text:"มีผลกระทบต่อสุขภาพ 😡", class:"hazardous", color: "#D32F2F", bgColor: "#FFEBEE"}; // สีแดงเข้ม/พื้นหลังแดงจาง
         }
 
-        // 4. สร้างรายงาน
+        // --- 4. ฟังก์ชันหลัก: สร้างรายงาน ---
         function generateReport() {
-            // -- จัดการพื้นที่ --
-            let area = document.getElementById("areaSelector").value;
-            if (area === "manual") area = document.getElementById("manualAreaInput").value;
-            document.getElementById("areaValue").innerText = area;
-
-            // -- จัดการวันเวลา --
-            const dateVal = document.getElementById("date").value;
-            if(dateVal) {
-                const d = new Date(dateVal);
-                const thMonth = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
-                document.getElementById("dateValue").innerText = `${d.getDate()} ${thMonth[d.getMonth()]} ${d.getFullYear()+543}`;
+            // ดึงค่าพื้นที่
+            let areaValue = document.getElementById("areaSelector").value;
+            if (areaValue === "manual") {
+                areaValue = document.getElementById("manualAreaInput").value;
             }
+            document.getElementById("areaValue").innerText = "พื้นที่: " + areaValue;
             
-            const hh = document.getElementById("hour").value.padStart(2,'0');
-            const mm = document.getElementById("minute").value.padStart(2,'0');
-            document.getElementById("timeValue").innerText = `${hh}:${mm} น.`;
+            // ดึงค่าวันที่
+            const dateInput = document.getElementById("date").value;
+            if (dateInput) {
+                const dateObj = new Date(dateInput);
+                const days = ["วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์"];
+                const months = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน",
+                                "กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+                
+                const dayName = days[dateObj.getDay()];
+                const day = dateObj.getDate();
+                const monthName = months[dateObj.getMonth()];
+                const yearBE = dateObj.getFullYear() + 543;
 
-            // -- จัดการสถานี --
-            const stationData = [
-                { name: "จุดตรวจวัด: ศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง", id: "pm1" },
-                { name: "จุดตรวจวัด: ศูนย์ราชการ ต.เนินพระ", id: "pm2" }
+                document.getElementById("dateValue").innerText = `${dayName} ที่ ${day} ${monthName} ${yearBE}`;
+            }
+
+            // ดึงค่าเวลา
+            const hour = document.getElementById("hour").value;
+            const minute = document.getElementById("minute").value;
+            if (hour !== "" && minute !== "") {
+                document.getElementById("timeValue").innerText = `เวลา: ${hour.padStart(2,'0')}:${minute.padStart(2,'0')} น.`;
+            }
+
+            const stationNames = [
+                "จุดตรวจวัด: ศูนย์วิจัยพืชไร่ ต.ห้วยโป่ง",
+                "จุดตรวจวัด: ศูนย์ราชการ ต.เนินพระ"
             ];
 
-            let html = "";
-            stationData.forEach(s => {
-                const val = parseFloat(document.getElementById(s.id).value);
-                if (!isNaN(val)) {
-                    const lv = getLevel(val);
-                    // แยก Emoji ออกจาก Text
-                    const emoji = lv.text.match(/[\u{1F600}-\u{1F64F}]/u)?.[0] || "";
-                    const textOnly = lv.text.replace(emoji, "").trim();
+            let stationsHTML = "";
+            for (let i = 1; i <= 2; i++) {
+                let name = stationNames[i - 1];
+                let pm = parseFloat(document.getElementById("pm" + i).value);
+                
+                if (!isNaN(pm)) {
+                    let level = getLevel(pm);
+                    
+                    const emoji = level.text.match(/[\u{1F600}-\u{1F64F}]/u)?.[0] || "";
+                    const levelText = level.text.replace(emoji, "").trim();
 
-                    html += `
-                        <div class="station ${lv.class}">
-                            <div class="station-name">${s.name}</div>
-                            <div class="pm-highlight">ค่า PM <span style="font-size:0.7em;">2.5</span> : ${val} µg/m³</div>
+                    stationsHTML += `
+                        <div class="station ${level.class}">
+                            <div class="station-name">${name}</div>
+                            <div class="pm-highlight">ค่า PM <span style="font-size: 0.7em; vertical-align: sub;">2.5</span> : ${pm} µg/m³</div>
                             <div class="emoji">${emoji}</div>
-                            <div class="level-highlight">ระดับ: ${textOnly}</div>
-                        </div>
-                    `;
+                            <div class="level-highlight" style="color: ${level.color}; background: ${level.bgColor};">ระดับ: ${levelText}</div>
+                        </div>`;
                 }
-            });
+            }
 
-            document.getElementById("stations").innerHTML = html;
-            document.getElementById("report").style.display = "block"; // แสดงผล
+            document.getElementById("stations").innerHTML = stationsHTML;
             
-            // เลื่อนหน้าจอลงไปดูรายงาน
-            document.getElementById("report").scrollIntoView({behavior: "smooth"});
+            document.getElementById("report").style.display = "block";
         }
 
-        // 5. บันทึกภาพ
+        // --- 5. ฟังก์ชันบันทึกเป็นภาพ ---
         function downloadImage() {
-            const r = document.getElementById("report");
-            html2canvas(r, { scale: 2, useCORS: true }).then(canvas => {
+            const report = document.getElementById("report");
+            html2canvas(report, { scale: 2 }).then(canvas => {
                 const link = document.createElement("a");
-                link.download = `PM2.5_Report_${new Date().toISOString().slice(0,10)}.png`;
+                link.download = "pm25-report.png";
                 link.href = canvas.toDataURL("image/png");
                 link.click();
             });
