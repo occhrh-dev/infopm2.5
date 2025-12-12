@@ -74,17 +74,29 @@ button:last-of-type { background: #4caf50; color: #fff; }
 }
 
 .header-text {
-    /* ชื่อโรงพยาบาล */
-    margin-top: 20px;  
+    /* --- โครงสร้างเดิม --- */
+    margin-top: 20px;   
     text-align: left;
-    font-size: 23px; /* ขยายขนาดตัวอักษรชื่อโรงพยาบาล */
+    font-size: 23px;
     font-weight: bold;
     color: #000000;
     line-height: 1.3;
     max-width: 550px; 
-    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
-    /*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);*/
-    white-space: nowrap;
+    white-space: nowrap; 
+
+    /* --- ส่วนที่เพิ่ม/แก้ไข --- */
+    
+    /* 1. ใส่พื้นหลังสีขาวจางๆ (ปรับเลข 0.6 เป็น 0.8 ถ้าอยากให้ขาวขึ้นอีก) */
+    background-color: rgba(255, 255, 255, 0.6);
+    
+    /* 2. จัดระเบียบกล่อง */
+    padding: 10px 15px; /* บนล่าง 10px, ซ้ายขวา 15px */
+    border-radius: 15px; /* ทำมุมมน */
+    
+    /* 3. เอาขอบขาวแบบเดิมออก (เพราะมีพื้นหลังขาวแล้ว) เปลี่ยนเป็นเงาดำบางๆ แทน */
+    text-shadow: none; 
+    /* หรือถ้าอยากให้ลอยเด่นจริงๆ ให้เปิดบรรทัดล่างนี้ครับ */
+    /* box-shadow: 0 4px 6px rgba(0,0,0,0.1); */
 }
 /* ========================================================================= */
 /* --- 3. ส่วนแสดงข้อมูล (พื้นที่/วันที่/เวลา) --- */
@@ -504,6 +516,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     </script>
 </body>
 </html>
+
 
 
 
