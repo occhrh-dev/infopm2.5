@@ -47,16 +47,8 @@ button {
     border-radius: 6px;
     font-size: 16px;
 }
-button:first-of-type { background: #2196f3; color: #fff; } /* ปุ่มสร้างรายงาน */
-button:last-of-type { background: #4caf50; color: #fff; } /* ปุ่มบันทึกภาพ */
-
-/* ปุ่มดึงข้อมูล API (เพิ่มใหม่) */
-.btn-api {
-    background: #ff9800 !important; 
-    color: #fff;
-    margin-right: 10px;
-}
-.btn-api:hover { background: #e65100 !important; }
+button:first-of-type { background: #2196f3; color: #fff; }
+button:last-of-type { background: #4caf50; color: #fff; }
 
 /* ========================================================================= */
 /* --- 2. ส่วนหัวกระดาษและโลโก้ --- */
@@ -321,12 +313,6 @@ button:last-of-type { background: #4caf50; color: #fff; } /* ปุ่มบั�
     <div class="form-section">
         <h2>กรอกข้อมูลสถานการณ์ฝุ่น PM2.5</h2>
         
-        <div style="margin-bottom: 20px; padding: 10px; background: #e3f2fd; border-radius: 8px;">
-            <strong>🚀 เครื่องมือด่วน:</strong><br>
-            <button onclick="fetchAir4ThaiData()" class="btn-api">🔄 ดึงข้อมูล Auto (Air4Thai)</button>
-            <span style="font-size: 14px; color: #666;">*กดปุ่มนี้เพื่อเติมข้อมูลอัตโนมัติ</span>
-        </div>
-        
         <label>พื้นที่: 
             <select id="areaSelector" onchange="toggleAreaInput()">
                 <option value="">-- เลือกพื้นที่ --</option>
@@ -401,18 +387,18 @@ button:last-of-type { background: #4caf50; color: #fff; } /* ปุ่มบั�
         function setInitialValues() {
             // 1. พื้นที่: ตั้งค่า Drop-down
             document.getElementById("areaSelector").value = "ต.มาบตาพุด/ต.ห้วยโป่ง";
-            setNow(); // เรียกใช้ฟังก์ชันตั้งเวลาปัจจุบัน
-        }
-        
-        function setNow() {
+
+            // 2. เวลา: ตั้งค่าเป็น 08:00 น.
+            document.getElementById("hour").value = "08";
+            document.getElementById("minute").value = "00";
+
+            // 3. วันที่: ตั้งค่าเป็นวันนี้
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
-            document.getElementById("date").value = `${yyyy}-${mm}-${dd}`;
             
-            document.getElementById("hour").value = String(today.getHours()).padStart(2, '0');
-            document.getElementById("minute").value = String(today.getMinutes()).padStart(2, '0');
+            document.getElementById("date").value = `${yyyy}-${mm}-${dd}`;
         }
 
         // --- 2. ฟังก์ชันควบคุม Dropdown (ระบุเอง) ---
@@ -442,70 +428,7 @@ button:last-of-type { background: #4caf50; color: #fff; } /* ปุ่มบั�
             
             return {text:"มีผลกระทบต่อสุขภาพ 😡", class:"hazardous", color: "#D32F2F", bgColor: "#FFEBEE"}; // สีแดงเข้ม/พื้นหลังแดงจาง
         }
-        
-        // --- NEW: ฟังก์ชันดึง API Air4Thai (เพิ่มใหม่) ---
-       // --- FINAL FIX: ฟังก์ชันดึง API Air4Thai (ระบุรหัส 31t และ 74t) ---
-       // --- SCANNER VERSION: ค้นหาสถานีในระยองทั้งหมดที่มีค่าตัวเลข ---
-        async function fetchAir4ThaiData() {
-            const btn = document.querySelector('.btn-api');
-            const originalText = btn.innerText;
-            btn.innerText = "🔍 กำลังสแกน...";
-            
-            try {
-                // เปลี่ยน Proxy เป็น allorigins เพื่อความชัวร์ (บางที corsproxy จำค่าเก่า)
-                const url = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('http://air4thai.pcd.go.th/services/getNewAQI_JSON.php');
-                const response = await fetch(url);
-                const data = await response.json();
-                
-                // 1. กรองหาสถานีทั้งหมดใน "ระยอง"
-                // ค้นหาจาก areaTH (ที่ตั้ง) หรือ nameTH (ชื่อ)
-                const rayongStations = data.stations.filter(s => 
-                    s.areaTH.includes("ระยอง") || 
-                    s.nameTH.includes("ระยอง") ||
-                    s.nameTH.includes("ห้วยโป่ง") ||
-                    s.nameTH.includes("มาบตาพุด")
-                );
 
-                let reportMsg = "สรุปข้อมูลสถานีในระยอง (จาก API):\n------------------\n";
-                let foundValue1 = false;
-                let foundValue2 = false;
-
-                // 2. วนลูปเช็คค่าทุกสถานี
-                rayongStations.forEach(s => {
-                    const id = s.stationID;
-                    const name = s.nameTH;
-                    const pm25 = s.LastUpdate.PM25.value; // ค่า PM2.5
-                    
-                    // เก็บข้อมูลลงรายงาน
-                    reportMsg += `📍 [${id}] ${name}: ${pm25}\n`;
-
-                    // 3. ลองพยายามยัดค่าลงช่อง ถ้า ID ตรง หรือ ชื่อคล้าย
-                    // เช็ค ห้วยโป่ง (31t) หรือ มาบตาพุด
-                    if ((id === '31t' || name.includes("ห้วยโป่ง")) && pm25 !== "-") {
-                        document.getElementById('pm1').value = pm25;
-                        foundValue1 = true;
-                    }
-
-                    // เช็ค ศูนย์ราชการ (74t) หรือ เนินพระ
-                    if ((id === '74t' || name.includes("ศูนย์ราชการ") || name.includes("เนินพระ")) && pm25 !== "-") {
-                        document.getElementById('pm2').value = pm25;
-                        foundValue2 = true;
-                    }
-                });
-
-                // อัปเดตเวลา
-                setNow();
-
-                // แสดงผลลัพธ์ให้คุณป๊อปดูว่า API เห็นค่าอะไรบ้าง
-                alert(reportMsg + "\n------------------\n(ระบบพยายามเติมตัวเลขลงช่องให้แล้วถ้ามีข้อมูล)");
-
-            } catch (err) {
-                console.error(err);
-                alert("เกิดข้อผิดพลาด: " + err.message);
-            } finally {
-                btn.innerText = originalText;
-            }
-        }
         // --- 4. ฟังก์ชันหลัก: สร้างรายงาน ---
         function generateReport() {
             // ดึงค่าพื้นที่
@@ -572,7 +495,6 @@ button:last-of-type { background: #4caf50; color: #fff; } /* ปุ่มบั�
         // --- 5. ฟังก์ชันบันทึกเป็นภาพ ---
         function downloadImage() {
             const report = document.getElementById("report");
-            // ปรับ scale เป็น 2 เพื่อความคมชัด
             html2canvas(report, { scale: 2 }).then(canvas => {
                 const link = document.createElement("a");
                 link.download = "pm25-report.png";
@@ -583,5 +505,3 @@ button:last-of-type { background: #4caf50; color: #fff; } /* ปุ่มบั�
     </script>
 </body>
 </html>
-
-
