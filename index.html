@@ -86,6 +86,30 @@ button:last-of-type { background: #4caf50; color: #fff; }
     text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
     /*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);*/
     white-space: nowrap;
+}.header-text {
+    /* --- ส่วนของการจัดตำแหน่ง (คงเดิมไว้เพื่อให้ Logo ไม่ขยับผิดตำแหน่ง) --- */
+    margin-top: 20px;
+    text-align: left;
+    
+    /* --- ส่วนของ Font (คงเดิม) --- */
+    font-size: 23px; 
+    font-weight: bold;
+    color: #000000;
+    line-height: 1.3;
+    max-width: 550px;
+    white-space: nowrap;
+    
+    /* --- [ใหม่] ส่วนพื้นหลัง --- */
+    background-color: rgba(255, 255, 255, 0.85); /* สีขาว โปร่งแสง 85% เพื่อให้ดูนวลตา */
+    padding: 8px 15px;       /* เพิ่มพื้นที่ว่างรอบตัวอักษรไม่ให้อึดอัด */
+    border-radius: 10px;     /* ทำขอบมนให้ดูทันสมัย */
+    border: 1px solid #ddd;  /* (ทางเลือก) ใส่ขอบบางๆ สีเทาจางๆ */
+    
+    /* เงาตัวอักษร (คงเดิม หรือจะลบออกก็ได้ถ้าพื้นหลังขาวแล้ว) */
+    text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+    
+    /* เพิ่มเงาให้กล่องข้อความดูเด่นขึ้นมานิดนึง */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
 }
 /* ========================================================================= */
 /* --- 3. ส่วนแสดงข้อมูล (พื้นที่/วันที่/เวลา) --- */
@@ -505,6 +529,7 @@ button:last-of-type { background: #4caf50; color: #fff; }
     </script>
 </body>
 </html>
+
 
 
 
